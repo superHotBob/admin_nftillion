@@ -4,13 +4,6 @@ import axios from "axios";
 import "./styles.scss";
 
 export const Create = () => {
-  const [author, setAuthor] = React.useState('');
-  const [category, setCategory] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [nameCollection, setNameCollection] = React.useState('');
-  const [symbol, setSymbol] = React.useState('');
-  const [description, setDescription] = React.useState('');  
-
   const [imageCollection, selectImageCollection] = React.useState();
   const [bannerCollection, selectBannerCollection] = React.useState();
   const [logoCollection, selectLogoCollection] = React.useState();
@@ -42,34 +35,6 @@ export const Create = () => {
     };
     reader.readAsDataURL(file);
   };
-  function CreateCollection() {
-    axios
-    .post(
-      "https://app.nftillion.io/admin/collection/create",
-      {
-        image: imageCollection,
-        logo: logoCollection,
-        banner: bannerCollection,
-        author: author,
-        category: category,
-        type: type,
-        metadata: {
-            name: nameCollection,
-            symbol: symbol,
-            description: description
-        }
-
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
-    .then((res) => {
-      console.log(res.data);
-    });
-  }
   return (
     <>
       <h1 className="header">Create new collection</h1>
@@ -109,14 +74,7 @@ export const Create = () => {
               style={{ height: bannerCollection ? '300px' : 'auto',
                 background: `url(${bannerCollection}) center / auto 90% no-repeat`,
               }}
-            > {bannerCollection && <img
-                src="/icon_close.png"
-                alt="close"
-                height={25}
-                width={25}
-                style={{ float: "right", margin: 10, cursor: 'pointer' }}
-                onClick={()=>selectBannerCollection()}
-              />}
+            >
               {!bannerCollection && (
                 <label>
                   Select banner
@@ -133,17 +91,10 @@ export const Create = () => {
             </div>
             <div
               className="logo"
-              style={{height: logoCollection ? '50px' : 'auto',
+              style={{height: logoCollection ? '300px' : 'auto',
                 background: `url(${logoCollection}) center / auto 90% no-repeat`,
               }}
-            > {logoCollection && <img
-                src="/icon_close.png"
-                alt="close"
-                height={25}
-                width={25}
-                style={{ float: "right", margin: 10, cursor: 'pointer' }}
-                onClick={()=>selectLogoCollection()}
-              />}
+            >
               {!logoCollection && (
                 <label>
                   Select logo
@@ -163,33 +114,33 @@ export const Create = () => {
         <div className="data_block">
           <label>
             Author
-            <input type="text" value={author} onChange={e=>setAuthor(e.target.value)}/>
+            <input type="text" />
           </label>
           <label>
             Category
-            <input type="text" value={category} onChange={e=>setCategory(e.target.value)}/>
+            <input type="text" />
           </label>
           <label>
             Type
-            <input type="text"value={type} onChange={e=>setType(e.target.value)}/>
+            <input type="text" />
           </label>
           <fieldset>
             <legend>Metadata</legend>
             <label>
               Name
-              <input type="text" value={nameCollection} onChange={e=>setNameCollection(e.target.value)}/>
+              <input type="text" />
             </label>
             <label>
               Symbol
-              <input type="text" value={symbol} onChange={e=>setSymbol(e.target.value)}/>
+              <input type="text" />
             </label>
             <label>
               Description
-              <input type="text" value={description} onChange={e=>setDescription(e.target.value)}/>
+              <input type="text" />
             </label>
           </fieldset>
 
-          <button onClick={CreateCollection}>CREATE</button>
+          <button>CREATE</button>
         </div>
       </div>
     </>

@@ -177,15 +177,15 @@ export const Create = () => {
             <legend>Metadata</legend>
             <label>
               Name
-              <input type="text" value={nameCollection} onChange={e=>setNameCollection(e.target.value)}/>
+              <input type="text" value={nameCollection}/>
             </label>
             <label>
               Symbol
-              <input type="text" value={symbol} onChange={e=>setSymbol(e.target.value)}/>
+              <input type="text" value={symbol}/>
             </label>
             <label>
               Description
-              <input type="text" value={description} onChange={e=>setDescription(e.target.value)}/>
+              <input type="text" value={description}/>
             </label>
           </fieldset>
 

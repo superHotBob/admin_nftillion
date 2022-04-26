@@ -5,11 +5,7 @@ import "./styles.scss";
 
 export const Create = () => {
   const [author, setAuthor] = React.useState('');
-  const [category, setCategory] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [nameCollection, setNameCollection] = React.useState('');
-  const [symbol, setSymbol] = React.useState('');
-  const [description, setDescription] = React.useState('');  
+  const [category, setCategory] = React.useState('');  
 
   const [imageCollection, selectImageCollection] = React.useState();
   const [bannerCollection, selectBannerCollection] = React.useState();
@@ -49,16 +45,7 @@ export const Create = () => {
       {
         image: imageCollection,
         logo: logoCollection,
-        banner: bannerCollection,
-        author: author,
-        category: category,
-        type: type,
-        metadata: {
-            name: nameCollection,
-            symbol: symbol,
-            description: description
-        }
-
+        banner: bannerCollection
       },
       {
         headers: {
@@ -167,25 +154,25 @@ export const Create = () => {
           </label>
           <label>
             Category
-            <input type="text" value={category} onChange={e=>setCategory(e.target.value)}/>
+            <input type="text" />
           </label>
           <label>
             Type
-            <input type="text"value={type} onChange={e=>setType(e.target.value)}/>
+            <input type="text" />
           </label>
           <fieldset>
             <legend>Metadata</legend>
             <label>
               Name
-              <input type="text" value={nameCollection} onChange={e=>setNameCollection(e.target.value)}/>
+              <input type="text" />
             </label>
             <label>
               Symbol
-              <input type="text" value={symbol} onChange={e=>setSymbol(e.target.value)}/>
+              <input type="text" />
             </label>
             <label>
               Description
-              <input type="text" value={description} onChange={e=>setDescription(e.target.value)}/>
+              <input type="text" />
             </label>
           </fieldset>
 

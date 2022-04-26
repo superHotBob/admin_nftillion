@@ -9,10 +9,9 @@
         height: 60vh;
         .image {
             width: 80%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 60px;
-            border: 1px dashed #ddd;
+            height: 50vh;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
             position: relative;
         }
         .image::before {
@@ -26,9 +25,9 @@
         }
         .logo {
             width: 80%;
-            border-radius: 10px;
-            margin-bottom: 60px;
-            border: 1px dashed #ddd;
+            height: 50vh;
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
             position: relative;
         }
         .logo::before {
@@ -43,10 +42,9 @@
         .banner {
             width: 80%;
             height: 50vh;
-            margin-bottom: 60px;
-            border: 1px dashed #ddd;
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
             position: relative;
-            border-radius: 10px;
         }
         .banner::before {
             content: 'Banner';
@@ -56,14 +54,6 @@
             font-size: 25px;
             font-weight: 600;
 
-        }
-        label {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 20px auto;
-            width: 40%;
-            display: block;
-           cursor: pointer;
         }
     }
     .data_block {
@@ -82,7 +72,6 @@
                 display: block;
                 border-radius: 5px;
                 padding: 10px 20px;
-                border-color: #ddd;
                 width: 300px;
                 font-size: 20px;
                 margin: 10px 0 0;
