@@ -1,0 +1,39 @@
+.main_block_create {
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    margin: 0 auto;
+   
+    .image_block {
+        width: 50%;
+        height: 60vh;
+    }
+    .data_block {
+        width: 50%;
+        height: 60vw;
+        border-left: 1px solid #ddd;
+        label {
+            display: block;
+            font-size: 25px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 50%;
+            text-align: left;
+            font-weight: 600;
+            input {
+                display: block;
+                padding: 10px 20px;
+                width: 300px;
+                font-size: 20px;
+                margin: 20px 0;
+                outline: none;
+            }
+        }
+        button {
+            width: 50%;
+        }
+    }
+}
+.header {
+    margin: 20px 0 30px;
+}
