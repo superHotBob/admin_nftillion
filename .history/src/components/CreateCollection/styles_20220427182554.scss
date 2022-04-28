@@ -1,0 +1,98 @@
+.main_block_create {
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+  margin: 0 auto;
+
+  .image_block {
+    width: 50%;
+    height: auto;
+    .image,
+    .banner,
+    .logo {
+      width: 80%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 160px;
+      border: 1px dashed #ddd;
+      position: relative;
+    }
+    *::before {
+      position: absolute;
+      top: -50px;
+      left: 0;
+      font-size: 25px;
+      font-weight: 600;
+    }
+    .image::before {
+      content: "Image";
+    }
+    .logo::before {
+      content: "Logo";
+    }
+    .banner::before {
+      content: "Banner";
+    }
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 20px auto;
+      width: 40%;
+      display: block;
+      cursor: pointer;
+    }
+  }
+  .data_block {
+    width: 50%;
+    height: auto;
+    border-left: 1px solid #ddd;
+    label,
+    legend {
+      display: flex;
+      justify-content: right;
+      font-size: 25px;
+      margin: 0 auto 30px;
+      width: 100%;
+      align-items: center;
+      text-align: left;
+      font-weight: 600;
+      input,
+      textarea {
+        display: block;
+        border-radius: 5px;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        width: 300px;
+        font-size: 20px;
+        margin: 10px 0 0 20px;
+        outline: none;
+      }
+    }
+    .buttons {
+        display: flex;
+        justify-content: right;
+        text-align: right;
+    }
+    button {
+      width: 340px;
+      margin-top: 30px;
+    }
+    .cancel {
+      width: 100%;
+      margin-right: 20px;
+      background-color: red;
+    }
+  }
+}
+.header {
+  margin: 20px 0 30px;
+  border: none;
+}
+@media screen and (max-width: 1300px){
+    .main_block_create {
+        width: 90%;
+    }
+}
+    
+

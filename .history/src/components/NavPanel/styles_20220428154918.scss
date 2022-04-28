@@ -1,0 +1,45 @@
+.mainNavBlock {
+  display: flex;
+  justify-content: space-around;
+  font-size: 25px;
+  line-height: 25px;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #ddd;
+  a {
+    padding: 20px;
+    width: 22%;
+    text-decoration: none;    
+  }
+  a:hover {
+    border-bottom: 1px solid #000;
+    text-align: center;
+  }
+  a:last-of-type {
+    width: 10%;
+}
+}
+@media screen and (max-width: 550px) {
+  .mainNavBlock {
+    align-items: center;
+    margin-bottom: 20px;
+
+    .mobileNo {
+      display: none;
+    }
+    a {
+      font-size: 14px;
+      height: 30px;
+
+      line-height: 30px;
+      padding: 5px;
+      width: 33%;
+    }
+    a:last-of-type {
+        width: 0;
+        padding: 0;
+    }
+  }
+}
