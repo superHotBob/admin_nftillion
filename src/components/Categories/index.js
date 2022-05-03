@@ -27,10 +27,9 @@ export const Categories = () => {
 
   return (
     <>
-      <NavPanel />
-      <div className="main_categories">
+      <NavPanel />      
         <h1 className="header_users">Categories</h1>
-        <div className="mainblock_categories">
+        <div className="main_categories">
           <header className="header_categories">
             <span>id</span>
             <span>name</span>
@@ -49,12 +48,13 @@ export const Categories = () => {
                 />
               </p>
             ))}
+            <Link to="/createcategory">
+              <b>create new</b>
+            </Link>
           </section>
-          <Link to="/createcategory">
-            <b>create new</b>
-          </Link>
+          
         </div>
-      </div>
+     
     </>
   );
 };

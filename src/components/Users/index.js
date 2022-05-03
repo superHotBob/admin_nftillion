@@ -103,41 +103,41 @@ export const Users = () => {
     <>
       <NavPanel />
       <h1 className="header_users">List of users</h1>
-      <div className="mainblockuser">
+      <div className="main_categories">
         <header>
-          <span style={{ width: "20%" }}>wallet</span>
+          <span>wallet</span>
           <span>date registration</span>
           <span>date last authorization</span>
-          <span style={{ width: "5%" }}>count collections</span>
-          <span style={{ width: "5%" }}>count NFTs</span>
-          <span style={{ width: "5%" }}>verified</span>
-          <span style={{ width: "5%" }}>blocked</span>
+          <span >count collections</span>
+          <span >count NFTs</span>
+          <span >verified</span>
+          <span >blocked</span>
         </header>
         <section>
           {data.map((i, index) => (
             <p className="data" key={i.id}>
-              <span style={{ width: "20%"}} onClick={()=> WriteToClipboard(i.wallet.address)}>
-                {i.wallet.address.slice(0,8)}<strong>...</strong>{i.wallet.address.slice(35,100)}
-                <img src='/icon_cp.svg' title="copy address" width={20} height={20} alt="copy"/>
+              <span  onClick={()=> WriteToClipboard(i.wallet.address)}>
+                {i.wallet.address.slice(0,8)}<strong>...</strong>{i.wallet.address.slice(41,100)}
+                <img src='/copy.svg' title="copy address" width={20} height={20} alt="copy"/>
               </span>
               <span>{new Date(i.wallet.created).toLocaleString()}</span>
               <span>{new Date(i.joined).toLocaleString()}</span>
-              <span style={{ width: "5%" }}>{i.count}</span>
-              <span style={{ width: "5%" }}>{i.items}</span>
-              <label style={{ width: "5%" }}>
+              <span>{i.count}</span>
+              <span  className="count">{i.items}</span>
+              <span>             
                 <input
                   type="checkbox"
                   checked={i.isVerified}
                   onChange={() => SetVerified(!i.isVerified, i.id)}
                 />
-              </label>
-              <label style={{ width: "5%" }}>
+              </span>
+              <span>
                 <input
                   type="checkbox"
                   checked={i.isBlocked}
                   onChange={() => SetBlocked(!i.isBlocked, i.id)}
                 />
-              </label>
+              </span>
             </p>
           ))}
         </section>
