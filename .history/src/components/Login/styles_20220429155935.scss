@@ -1,0 +1,102 @@
+$submit: #B75CFF;
+$white: #007bff;
+$color_1: $submit;
+$color_2: #fff;
+$transition: all 0.25s ease-in-out;
+.mainblock {
+  width: 480px;
+  height: auto;
+  position: relative;
+  color: #fff;
+  padding: 20px;
+  background-color: #2c2c2c;
+  margin: 20vw auto;
+  box-shadow: 0px 2px 2px rgb(0 0 0 / 30%);
+  border-radius: 10px;
+  font-size: 25px;
+  h2 {
+    margin-top: 0;
+  }
+  .input,
+  .signIn {
+    font-size: 20px;
+    padding: 10px 20px;
+    display: block;
+    width: 100%;
+    background-color: #676768;
+    border-radius: 5px;
+    color: #E8E8E8;
+    margin: 30px auto;
+    cursor: pointer;
+    box-sizing: border-box;
+    outline: none;
+    height: 44px;
+  }
+  label,
+  button {
+    width: 100%;
+    text-align: left;
+    margin: 30px auto;
+    display: block;
+
+  }
+  button {
+    text-align: center;
+    font-weight: 600;
+    background: linear-gradient(214.02deg, #B75CFF 6.04%, #5C00F2 92.95%)
+  }
+  p {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  p:hover {
+   opacity: 1;
+  }
+  .change_password {
+    position: absolute;
+    top: -50px;
+    left: 140px;
+    opacity: 1;
+    transition: all 1s;
+  }
+  .hide {
+    opacity: 0;
+    transition: all 1s;
+  }
+  @mixin mybutton($color_1, $color_2) {
+    border: 2px solid $color_1;
+    letter-spacing: 2px;
+    color: #fff;
+    background-color: $color_2;
+    transition: $transition;
+    &:hover {
+      background-color: $color_1;
+      border-color: $color_1;
+      opacity: 0.8;
+      color: #fff;
+    }
+    &:active {
+      background-color: $color_1;
+      border-color: $color_1;
+      color: #fff;
+      box-shadow: none;
+    }
+    &:focus,
+    &:active:focus {
+      background-color: $color_1;
+      border-color: $color_1;
+      color: #fff;
+      outline: 5px auto $color_1;
+    }
+  }
+
+  button {
+    @include mybutton($submit, $color_2);
+  }
+}
+@media screen and (max-width: 550px) {
+  .mainblock {
+    width: 340px;
+    margin: 20vw auto;
+  }
+}  
