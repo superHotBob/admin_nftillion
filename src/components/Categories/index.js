@@ -34,11 +34,12 @@ export const Categories = () => {
             <span>id</span>
             <span>name</span>
             <span>created</span>
-            <span>image</span>
+            <span className="last_image">image</span>
           </header>
           <section className="data_categories">
             {data.map((i) => (
-              <p className="data mobile">
+              <Link to='/createcategory' state={{id: i.id,image: i.image, name: i.name}}>
+              <p className="data mobile editable">
                 <span>{i.id}</span>
                 <span>{i.name}</span>
                 <span>{new Date(i.created).toLocaleString()}</span>
@@ -47,9 +48,10 @@ export const Categories = () => {
                   style={{ backgroundImage: `url(${i.image})` }}
                 />
               </p>
+              </Link>
             ))}
-            <Link to="/createcategory">
-              <b>create new</b>
+            <Link to="/createcategory" className="button">
+              Сreate new
             </Link>
           </section>
           

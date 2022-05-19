@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link , useLocation} from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 import "./styles.scss";
 
@@ -13,9 +14,8 @@ export const CreateCategories = () => {
   // const [description, setDescription] = React.useState("");
 
   const [imageCategories, selectImageCategories] = React.useState();
-
-  const { register, handleSubmit } = useForm();
-
+  const location = useLocation()
+  const { register, handleSubmit } = useForm();  
   const viewImage = async (event) => {
     let file = event.target.files[0];
     console.log(file);
@@ -25,22 +25,23 @@ export const CreateCategories = () => {
     };
     reader.readAsDataURL(file);
   };
-
+  React.useEffect(()=>{
+    if(location.state) {
+       selectImageCategories(location.state.image)
+    } else {
+      selectImageCategories()
+    }
+   
+  },[location])
   async function onSubmit(data) {
     const form = new FormData();
-
-    form.append("id", data.id);
-    form.append("type", data.type);
-    form.append("category", data.category);
-
-    form.append("image", data.image[0]);
+   
+    form.append("name", data.name);
+    form.append("file", data.image[0]);
 
     // event.preventDefault();
-    await fetch("https://app.nftillion.io/admin/collection/create", form, {
-      method: "Post",
-
-      headers: {
-        "X-Content-Type-Options": "nosniff",
+    await axios.post("https://app.nftillion.io/admin/category/create", form, {     
+      headers: {        
         "Content-Type": "multipart/form-data; boundary=something",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -48,14 +49,14 @@ export const CreateCategories = () => {
   }
   return (
     <>
-      <h1 className="header_users new">Create new category</h1>
-      <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+      <h1 className="header_users new">{location.state ? 'Edit category' : 'Create new category'}</h1>
+      <form onSubmit={handleSubmit(onSubmit)} method="post">
         <div className="create_category">
           <div
             className="image"
             style={{
-              height: imageCategories ? "300px" : "auto",
-              background: `url(${imageCategories}) center / auto 90% no-repeat`,
+              height: imageCategories ? "400px" : "auto",
+              background: `#fff url(${imageCategories}) center / auto 90% no-repeat`,
             }}
           >
             {imageCategories && (
@@ -64,19 +65,21 @@ export const CreateCategories = () => {
                 alt="close"
                 height={25}
                 width={25}
-                style={{ float: "right", margin: 10, cursor: "pointer" }}
+                style={{ float: "right", margin: 5, cursor: "pointer" }}
                 onClick={() => selectImageCategories()}
               />
             )}
             {!imageCategories && (
-              <label>
+              <label style={{justifyContent: 'center'}}>
                 Select image
                 <input
                   type="file"
                   style={{ display: "none" }}
-                  {...register("image")}
+                  {...register("image",{
+                    onChange: (e) => viewImage(e)
+                  })}
                   accept="image/png, image/gif, image/webp, image/jpeg, video/mp4,audio/mp3"
-                  onChange={(e) => viewImage(e)}
+                  
                 />
               </label>
             )}
@@ -87,10 +90,8 @@ export const CreateCategories = () => {
             <input
               type="text"
               pattern="[0-9]+"
-              placeholder="id of created user"
-             
-              {...register("id")}
-              // onChange={(e) => setAuthor(e.target.value)}
+              placeholder="id of created user"             
+              {...register("id", {value: location.state ? location.state.id : ''})}              
             />
           </label>
           <label>
@@ -99,17 +100,16 @@ export const CreateCategories = () => {
               type="text"
               name="name"
               required
-              style={{ marginLeft: 8 }}
-            
-              {...register("nameCollection")}
-              // onChange={(e) => setNameCollection(e.target.value)}
+              style={{ marginLeft: 8 }}            
+              {...register("name", {value: location.state ? location.state.name : ''})}
+              
             />
           </label>
           <label>
-            <Link to="/premintedcollections">
-              <button className="cancel">Cancel</button>
+            <Link to="/categories" className="button cancel">
+              Cancel
             </Link>
-            <button type="submit">Create</button>
+            <button type="submit" className="button size">Create new</button>
           </label>
         </div>
       </form>

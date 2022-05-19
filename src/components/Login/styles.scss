@@ -6,12 +6,15 @@ $transition: all 0.25s ease-in-out;
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500&family=Roboto:ital,wght@0,500;1,400&family=Urbanist:wght@500;800&display=swap');
 .mainblock {
   width: 480px;
-  height: auto;
+  height: 385px;
+  box-sizing: border-box;
   position: relative;
   color: #fff;
   padding: 20px;
   background-color: #2c2c2c;
-  margin: 20vw auto;
+  margin: 0 auto;
+  position: relative;
+  top: calc(50vh - 193px);
   box-shadow: 0px 2px 2px rgb(0 0 0 / 30%);
   border-radius: 10px;
   font-size: 25px;
@@ -102,7 +105,10 @@ $transition: all 0.25s ease-in-out;
 }
 @media screen and (max-width: 550px) {
   .mainblock {
-    width: 340px;
-    margin: 20vw auto;
+    width: 80vw;
+    margin: 0 auto;
+    h2 {
+      font: 800 30px/35px 'Urbanist' , sans-serif ;
+    }
   }
 }  

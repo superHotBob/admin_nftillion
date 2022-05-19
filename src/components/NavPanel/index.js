@@ -8,10 +8,10 @@ export const NavPanel = () => {
       <div className="mainNavBlock">
         <NavLink
           to="/users"
+          className="users"
           style={({ isActive }) => {
             return {
-              borderRadius: "10px",
-              padding: "10px 20px",
+              borderRadius: "10px",             
               background: isActive
                 ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
                 : "inherrit",
@@ -25,7 +25,7 @@ export const NavPanel = () => {
             to="/collections"
             style={({ isActive }) => {
               return {
-                padding: "10px 20px",
+               
                 borderRadius: "10px",
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
@@ -40,7 +40,7 @@ export const NavPanel = () => {
             style={({ isActive }) => {
               return {
                 borderRadius: "10px",
-                padding: "10px 20px",
+                
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
                   : "inherrit",
@@ -54,7 +54,7 @@ export const NavPanel = () => {
             style={({ isActive }) => {
               return {
                 borderRadius: "10px",
-                padding: "10px 20px",
+                
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
                   : "inherrit",

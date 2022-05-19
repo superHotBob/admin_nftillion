@@ -15,11 +15,15 @@
    justify-content: space-between;
    align-items: center;
  }
+ .users {
+   font: 500 25px/28px 'Roboto' , sans-serif;
+ }
   a {
-    margin: 0 20px;
+    margin: 0 10px;
     font-family: 'Public Sans', sans-serif;
     background: rgba(29, 0, 126, 1);
     font-size: 20px;
+    padding: 10px;
     line-height: 30px;    
     color: #fff;  
     text-decoration: none;
@@ -41,19 +45,24 @@
   display: none;
 }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .mainNavBlock{
      width: 96%;
      align-items: center;
+     border-bottom: 1px solid rgba(244, 245, 247, 0.5);
+     padding: 15px 0;
      a {
        font-size: 16px;
-       margin: 0 10px;
+       margin: 0 5px;
+       padding: 10px;
+       font-weight: 500;
      }
      img.mobileNo {
-       margin: 0 10px;
+       margin: 0 5px;
      }
-     .second_link a:last-of-type {
+     a .second_link a:last-of-type {
        width: 100px;
+       font-size: 16px;
      }
   }
  

@@ -10,9 +10,10 @@
       width: 80%;
       height: auto;
       border-radius: 10px;
-      margin: 0 auto 160px;
+      margin: 0 auto 10px;
       border: 1px dashed #ddd;
       position: relative;
+      background-color: #fff;
     }
     *::before {
       position: absolute;
@@ -24,14 +25,23 @@
     .image::before {
       content: "Image";
     }
-
+    
     label {
       font-size: 20px;
-      font-weight: 600;
+     
       margin: 20px auto;
+
       width: 40%;
       display: block;
-      cursor: pointer;
+     
+    }
+    .image label {
+      color: #000;
+      cursor: pointer; 
+      font-weight: 400;
+    }
+    .image label:hover {
+      color: gray;
     }
     label span {
       display: inline-block;
@@ -43,10 +53,10 @@
     label,
     legend {
       display: flex;
-      justify-content: center;
+      justify-content: right;
       font-size: 25px;
      
-      width: 100%;
+      width: 50%;
       align-items: center;
       text-align: left;
       font-weight: 600;
@@ -68,16 +78,15 @@
       justify-content: right;
       text-align: right;
     }
-    button {
-      width: 340px;
-      margin-top: 30px;
-    }
-    .cancel {
-      width: 120px;
-      margin-right: 20px;
-      background-color: red;
+    .size {
+      width: 41%;
     }
   
+   
+  
+}
+.new {
+  margin: 50px 0;
 }
 .header {
   margin: 20px 0 30px;
@@ -87,10 +96,16 @@
   .main_block_create {
     width: 90%;
   }
+  .new {
+    margin: 10px 0;
+  }
 }
 @media screen and (max-width: 550px) {
   .header {
     font-size: 25px;
+  }
+  .new {
+    margin: 10px auto 0;
   }
   .create_category {
     display: flex;

@@ -56,6 +56,7 @@ export const LogIn = () => {
     setViewNewPassword(true);
   }
   return (
+    <div style={{backgroundColor: '#ddd', height: '100vh'}}>
     <div className="mainblock">
       <span className={change_pass ? "change_password" : "change_password hide"}>password changed</span>
       <h2>{viewNewPassword ? "Change password" : "Sign in"}</h2>
@@ -99,6 +100,7 @@ export const LogIn = () => {
         {!viewNewPassword && <p onClick={ChangePassword}>change password</p>}
       </form>
       
+    </div>
     </div>
   );
 };

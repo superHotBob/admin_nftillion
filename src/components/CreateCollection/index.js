@@ -6,12 +6,7 @@ import "./styles.scss";
 import axios from "axios";
 
 export const Create = () => {
-  // const [author, setAuthor] = React.useState("");
-  // const [category, setCategory] = React.useState("");
-  // const [type, setType] = React.useState("");
-  // const [nameCollection, setNameCollection] = React.useState("");
-  // const [symbol, setSymbol] = React.useState("");
-  // const [description, setDescription] = React.useState("");
+  const [viewAnswer, setViewAnswer] = React.useState(false);
 
   const [imageCollection, selectImageCollection] = React.useState();
   const [bannerCollection, selectBannerCollection] = React.useState();
@@ -62,20 +57,19 @@ export const Create = () => {
     form.append("banner", data.logo[0]);
 
     console.log(data.image[0]);
-    const res = await axios
+     await axios
       .post("https://app.nftillion.io/admin/collection/create", form, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
-      .then((res) => res.json());
-
-    alert(JSON.stringify(`${res.message}, status: ${res.status}`));
+      .then((res) => setViewAnswer(true))
+      .then(res=>setTimeout(()=>setViewAnswer(false),2000));   
   }
   return (
-    <>
-      <h1 className="header_users">Create new collection</h1>
+    <div>
+      <h1 className="header_users new">Create new collection</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="main_block_create">
         <div className="image_block" style={{ marginTop: 40 }}>
           <div
@@ -177,8 +171,7 @@ export const Create = () => {
               type="text"
               pattern="[0-9]+"
               placeholder="id of created user"
-              name="author"
-              // value={author}
+              name="author"             
               {...register("author")}
               // onChange={(e) => setAuthor(e.target.value)}
             />
@@ -196,10 +189,8 @@ export const Create = () => {
             <input
               type="text"
               name="type"
-              pattern="[0-9]+"
-              // value={type}
-              {...register("type")}
-              // onChange={(e) => setType(e.target.value)}
+              pattern="[0-9]+"              
+              {...register("type")}              
             />
           </label>
           <label>
@@ -208,30 +199,24 @@ export const Create = () => {
               type="text"
               name="name"
               required
-              style={{ marginLeft: 8 }}
-              // value={nameCollection}
-              {...register("nameCollection")}
-              // onChange={(e) => setNameCollection(e.target.value)}
+              style={{ marginLeft: 8 }}             
+              {...register("nameCollection")}              
             />
           </label>
           <label>
             Symbol
             <input
               type="text"
-              name="symbol"
-              // value={symbol}
-              {...register("symbol")}
-              // onChange={(e) => setSymbol(e.target.value)}
+              name="symbol"              
+              {...register("symbol")}              
             />
           </label>
           <label>
             Description
             <textarea
               rows={5}
-              name="description"
-              // value={description}
-              {...register("description")}
-              // onChange={(e) => setDescription(e.target.value)}
+              name="description"             
+              {...register("description")}              
             />
           </label>
           <label>
@@ -242,6 +227,7 @@ export const Create = () => {
           </label>
         </div>
       </form>
-    </>
+      <div className={viewAnswer ? 'answer' : 'answer hide'}>Collection created</div>
+    </div>
   );
-};
+}

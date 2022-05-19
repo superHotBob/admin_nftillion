@@ -114,11 +114,11 @@ export const Users = () => {
           <span >blocked</span>
         </header>
         <section>
-          {data.map((i, index) => (
+          {data.map(i => (
             <p className="data" key={i.id}>
               <span  onClick={()=> WriteToClipboard(i.wallet.address)}>
                 {i.wallet.address.slice(0,8)}<strong>...</strong>{i.wallet.address.slice(41,100)}
-                <img src='/copy.svg' title="copy address" width={20} height={20} alt="copy"/>
+                <img src='/copy.png' title="copy address" width={30} height={20} alt="copy"/>
               </span>
               <span>{new Date(i.wallet.created).toLocaleString()}</span>
               <span>{new Date(i.joined).toLocaleString()}</span>

@@ -1,5 +1,5 @@
 .main_categories {
-  b {
+  .button {
     height: 52px;
     box-sizing: border-box;
     width: 200px;    
@@ -17,7 +17,7 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
-  .data:hover {
+  .editable:hover {
     background-color: #ddd;
     cursor: pointer;
   }
@@ -25,6 +25,7 @@
 a {
   text-decoration: none;
 }
+
 @media screen and (max-width: 550px) {
   .mainblock_categories .data,
   .mainblock_categories .header_categories {

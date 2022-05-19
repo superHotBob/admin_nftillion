@@ -20,7 +20,7 @@ export const PremintedCollections = () => {
           })
           .then((res) => {
             console.log(res.data);
-            setData(['res.data']);
+            setData(["res.data"]);
           })
       : navigate("/");
   }, [name, navigate]);
@@ -28,7 +28,7 @@ export const PremintedCollections = () => {
   return (
     <>
       <NavPanel />
-      <h1 className="header_users">Preminted collections</h1>
+      <h1 className="header_users new">Preminted collections</h1>
       <div className="main_categories">
         <header className="header_categories">
           <span>id</span>
@@ -38,7 +38,7 @@ export const PremintedCollections = () => {
         </header>
         <section className="data_categories">
           {data.map((i) => (
-            <p className="data mobile">
+            <p className="data mobile editable">
               <span>{i.id}</span>
               <span>{i.name}</span>
               <span>{new Date(i.created).toLocaleString()}</span>
@@ -49,8 +49,8 @@ export const PremintedCollections = () => {
             </p>
           ))}
 
-          <Link to="/createcollection">
-            <b>create new</b>
+          <Link to="/createcollection" className="button">
+            Create new
           </Link>
         </section>
       </div>
