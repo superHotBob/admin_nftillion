@@ -21,6 +21,20 @@ export const NavPanel = () => {
           Users
         </NavLink>
         <div className="second_link mobileNo">
+        <NavLink
+            to="/nft"
+            style={({ isActive }) => {
+              return {
+               
+                borderRadius: "10px",
+                background: isActive
+                  ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
+                  : "",
+              };
+            }}
+          >
+            NFT
+          </NavLink>
           <NavLink
             to="/collections"
             style={({ isActive }) => {
@@ -85,6 +99,7 @@ export const NavPanel = () => {
       </div>
       {view && (
         <div className="mobile_menu mobileYes">
+          <NavLink to="/nft">Nft</NavLink>
           <NavLink to="/collections">Collections</NavLink>
           <NavLink to="/categories">Categories</NavLink>
           <NavLink to="/premintedcollections">Preminted Collections</NavLink>

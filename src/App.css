@@ -19,22 +19,21 @@ section {
   
 }
 .button {
-  height: 52px;
+  height: 50px;
   box-sizing: border-box;
   width: 200px;    
-  padding: 10px 20px;
+ 
   color: #fff;    
   margin: 20px auto;
-  font: 400 22px/26px 'Popins', sans-serif;
+  font: 400 22px/50px 'Popins', sans-serif;
   background: linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%);
   border-radius: 10px;
 }
 .cancel {
   width: 120px;
-  margin-right: 20px;
-  line-height: 31px;
+  margin-right: 20px;  
   text-align: center;
-  background-color: rgb(231, 216, 216);
+  background: red;
 }
 header {
   border-top-left-radius: inherit;
@@ -55,6 +54,9 @@ section .data span.count {
 section p span:first-of-type {
   color: #000;
 
+}
+a {
+  color: #fff;
 }
 body {
   background: rgba(29, 0, 126);

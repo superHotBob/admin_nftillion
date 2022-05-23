@@ -1,0 +1,136 @@
+.create_nft {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 1000px;
+  margin: 30px auto 0;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  .image {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    margin: 0 auto;
+    border: 1px dashed #ddd;
+    position: relative;
+    background-color: #fff;
+  }
+  *::before {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .image::before {
+    content: "";
+  }
+  .inputs {
+    width: 50%;
+  }
+  label {
+    font-size: 20px;
+    margin: 0 auto 30px;
+   
+    display: block;
+  }
+  .image label {
+    color: #000;
+    cursor: pointer;
+    font-weight: 400;
+    margin: 44% auto;
+  }
+  .image label:hover {
+    color: gray;
+  }
+ 
+  form {
+    margin-top: 130px;
+  }
+  label {
+    display: flex;
+    justify-content: right;
+    font-size: 25px;
+    align-items: center;
+    text-align: left;
+    font-weight: 600;
+   
+    span {
+      display: inline-block;
+      width: 35%;
+    }
+    input,
+    textarea,
+    select,
+    button {
+      display: block;
+      border-radius: 9px;
+      box-sizing: border-box;
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      width: 60%;
+      font-size: 20px;
+      margin: 0 0 0 20px;
+      outline: none;
+    }
+  }
+ 
+  .buttons {
+    display: flex;
+    justify-content: right;
+    text-align: right;
+  }
+  button[type=submit] {
+    width: 60%;
+    border-radius: 9px;
+    background: linear-gradient(214.02deg,#b75cff 6.04%,#6205fa 92.95%);
+  }
+  .cancel {
+    width: 120px;
+    margin-right: 20px;
+   
+   
+  }
+
+}
+.new {
+  margin: 20px 0 10px;
+}
+.created {
+  color: red;
+  background-color: #fff;
+}
+.header {
+  margin: 20px 0 30px;
+  border: none;
+}
+@media screen and (max-width: 1000px) {
+  .create_nft {
+    width: 100vw;
+  }
+}
+ 
+@media screen and (max-width: 550px) {
+  .header {
+    font-size: 25px;
+  }
+  .create_nft {
+    flex-direction: column;
+    width: 100vw;;
+    h1.new {
+      margin: 20px auto;
+    }
+    .image {
+      width: 95%;
+      height: 95vw;
+    }
+    .inputs {
+      width: 95%;
+      margin: 30px auto;
+    }
+
+  }
+  
+  
+  
+}

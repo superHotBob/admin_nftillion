@@ -9,6 +9,8 @@ import { Categories } from "./components/Categories";
 import { Create } from "./components/CreateCollection";
 import { PremintedCollections } from "./components/PremintedCollections";
 import { CreateCategories } from "./components/CreateCategories";
+import { Nft } from "./components/Nft";
+import { CreateNft } from "./components/CreateNft";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
     <Routes>
         <Route path="/" element={<LogIn />} />      
         <Route path="users" element={<Users />} />
+        <Route path="nft" element={<Nft />} />
+        <Route path="createnft" element={<CreateNft />} />
         <Route path="collections" element={<Collections />} />
         <Route path="categories" element={<Categories />} />
         <Route path="premintedcollections" element={<PremintedCollections />} />

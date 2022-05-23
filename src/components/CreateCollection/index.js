@@ -48,7 +48,7 @@ export const Create = () => {
       symbol: data.symbol,
       description: data.description,
     };
-    form.append("author", Number(data.author));
+    // form.append("author", Number(data.author));
     form.append("type", Number(data.type));
     form.append("category", Number(data.Category));
     form.append("metadata", JSON.stringify(metadata));
@@ -165,7 +165,7 @@ export const Create = () => {
           </div>
         </div>
         <div className="data_block">
-          <label>
+          {/* <label>
             Author
             <input
               type="text"
@@ -175,7 +175,7 @@ export const Create = () => {
               {...register("author")}
               // onChange={(e) => setAuthor(e.target.value)}
             />
-          </label>
+          </label> */}
           <label>
             Category
             <select {...register("Category")}>

@@ -85,7 +85,7 @@ export const CreateCategories = () => {
             )}
           </div>
 
-          <label>
+          {/* <label>
             <span>Id</span>
             <input
               type="text"
@@ -93,7 +93,7 @@ export const CreateCategories = () => {
               placeholder="id of created user"             
               {...register("id", {value: location.state ? location.state.id : ''})}              
             />
-          </label>
+          </label> */}
           <label>
            <span>Name*</span> 
             <input

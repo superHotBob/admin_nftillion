@@ -73,22 +73,22 @@ header span:first-of-type {
 }
 button {
   height: 45px;
-  width: 65%;
+ 
   font-size: 20px;
-  border-radius: 30px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
   color: #fff;
   border: none;
   outline: none;
 }
-button:first-of-type {
-  background-color: red;
-  width: 30%;
-}
-button:last-of-type {
-  background-color: #007bff;
-}
+// button:first-of-type {
+//   background-color: red;
+//   width: 30%;
+// }
+// button:last-of-type {
+//   background-color: #007bff;
+// }
 button:hover {
   opacity: 0.7;
   border-color: rgba(200, 255, 255, 1);

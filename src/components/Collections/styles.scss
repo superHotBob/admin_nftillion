@@ -23,25 +23,8 @@
     background-color: #fff;
     box-shadow: -7px 0px 8px 0px rgba(34, 60, 80, 0.2);
 }    
-button {
-    height: 45px;
-    width: 65%;
-    font-size: 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
-    color: #fff;
-    border: none;
-    outline: none;
 
-}
-button:first-of-type {
-    background-color: red;
-    width: 30%;
-}
-button:last-of-type {
-    background-color: #007bff;
-}
+
 button:hover {
     opacity: 0.7;  
     border-color: #f9f9ff;
