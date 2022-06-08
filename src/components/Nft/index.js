@@ -84,18 +84,8 @@ export const Nft = () => {
             setTotal(res.data.total);
           })
       : navigate("/");
-
-    // axios
-    //   .get("https://app.nftrealworld.io/admin/collections/fromAdmin", {
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setCollection(res.data);
-    //   });
-  }, [name, navigate, page]);
+   
+  }, [name, navigate, page, filterCollection]);
 
   function SetBlocked(a, b) {
     let my_data = nft.map((i) => (i.id === b ? { ...i, isBlocked: a } : i));
@@ -107,7 +97,7 @@ export const Nft = () => {
   }
   React.useEffect((i) => {
     axios
-      .get("https://app.nftrealworld.io/admin/collections", {
+      .get('https://app.nftrealworld.io/admin/collections?page=0&take=100', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -140,24 +130,13 @@ export const Nft = () => {
   }
   function SelectCollection(e) {
     setFilterCollection(e.target.value);
-    axios
-      .get(
-        `https://app.nftrealworld.io/admin/items?collection=${e.target.value}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setNft(res.data.items);
-      });
+    
   }
   function Search(e) {
     if (e.target.value) {
       axios
         .get(
-          `https://app.nftrealworld.io/admin/items?search=${e.target.value}`,
+          `https://app.nftrealworld.io/admin/items?search=${e.target.value}&page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

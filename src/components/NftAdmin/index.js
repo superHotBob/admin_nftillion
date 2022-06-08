@@ -112,7 +112,7 @@ export const NftAdmin = () => {
         },
       })
       .then((res) => {});
-  }, [name, navigate, page]);
+  }, [name, navigate, page,fiterCollection]);
   function SetBlocked(a, b) {
     let my_data = nft.map((i) => (i.id === b ? { ...i, isBlocked: a } : i));
     setNft(my_data);
@@ -120,26 +120,11 @@ export const NftAdmin = () => {
     setId(b);
     !a ? Save(b, a) : setView(a);
   }
-  function SelectCollection(e) {  
-    setFilterCollection(e.target.value); 
-    axios
-      .get(
-        `https://app.nftrealworld.io/admin/items/fromAdmin?collection=${e.target.value}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setNft(res.data.items);
-      });
-
-};
+ 
   function Search(e) {
     if (e.target.value) {
       axios
-        .get(`https://app.nftrealworld.io/admin/items/fromAdmin?query=${e.target.value}`, {
+        .get(`https://app.nftrealworld.io/admin/items/fromAdmin?search=${e.target.value}&page=${page}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
@@ -150,7 +135,7 @@ export const NftAdmin = () => {
     } else {
       axios
         .get(
-          `https://app.nftrealworld.io/admins/items/fromAdmin?page=${page}`,
+          `https://app.nftrealworld.io/admin/items/fromAdmin?page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -182,7 +167,7 @@ export const NftAdmin = () => {
         
         {collection && <label>
         collection:
-        <select defaultValue='all' onChange={SelectCollection}>
+        <select defaultValue='all' onChange={(e)=>setFilterCollection(e.target.value)}>
           <option value="">All</option>
           <option value="single">Single</option>
           {collection.map(i=><option value={i.id}>{i.name}</option>)}
@@ -231,6 +216,7 @@ export const NftAdmin = () => {
                   <span>{new Date(i.created).toLocaleString()}</span>
                   <Link
                     to="/createnft"
+                    title="click for edit"
                     state={{
                       id: i.id,
                       maxSupply: i.maxSupply,

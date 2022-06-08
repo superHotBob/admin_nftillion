@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import search from "../../image/search.svg";
 import "./styles.scss";
 
 import { NavPanel } from "../NavPanel";
@@ -92,12 +92,45 @@ export const Users = () => {
       : navigate("/");
   }, [name, navigate, page]);
 
+  function Search(e) {
+    if (e.target.value) {
+      axios
+        .get(`https://app.nftrealworld.io/admin/users?search=${e.target.value}&page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data.users);
+        });
+    } else {
+      axios
+        .get(
+          `https://app.nftrealworld.io/admin/users?page=${page}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then((res) => {
+          setData(res.data.users);
+        });
+    }
+  }
   return (
     <>
       <NavPanel />
       <FirstString text="List of users" title={`Total users: ${total}`} />
       <div className="page_search">
-        {/* <input type="search" placeholder="enter id for search" /> */}
+        <input type="search" placeholder="enter for search" onChange={Search} />
+        <img
+          src={search}
+          width="25"
+          alt="search"
+          height="25"
+          className="image"
+        />        
         {page - 1 ? (
           <b
             title="prev page"
@@ -114,10 +147,11 @@ export const Users = () => {
         >
           next
         </b>
-      </div>
+      </div>     
       <div className="main_users">
         <header>
           <span style={{ width: "18%" }}>Wallet</span>
+          <span>User name</span>
           <span>Date registration</span>
           <span>Date last authorization</span>
           <span>Count collections</span>
@@ -140,6 +174,7 @@ export const Users = () => {
                   alt="copy"
                 />
               </span>
+              <span>{i.username}</span>
               <span>{new Date(i.wallet.created).toLocaleString()}</span>
               <span>{new Date(i.joined).toLocaleString()}</span>
               <span>{i.count}</span>
