@@ -2,13 +2,13 @@
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  width: 1000px;
-  margin: 30px auto 0;
+  width: 70%;
+  margin: 30px auto;
   color: #fff;
   font-family: "Roboto", sans-serif;
   .image {
     width: 50%;
-    height: auto;
+    height: 600px;
     border-radius: 10px;
     margin: 0 auto;
     border: 1px dashed #ddd;
@@ -38,7 +38,7 @@
     color: #000;
     cursor: pointer;
     font-weight: 400;
-    margin: 44% auto;
+    margin: 20px auto;
   }
   .image label:hover {
     color: gray;
@@ -58,6 +58,8 @@
     span {
       display: inline-block;
       width: 35%;
+      position: relative;
+      margin-right: 15px;
     }
     input,
     textarea,
@@ -67,7 +69,7 @@
       border-radius: 9px;
       box-sizing: border-box;
       padding: 10px 20px;
-      border: 1px solid #ddd;
+     
       width: 60%;
       font-size: 20px;
       margin: 0 0 0 20px;
@@ -75,38 +77,65 @@
     }
   }
  
-  .buttons {
-    display: flex;
-    justify-content: right;
-    text-align: right;
-  }
-  button[type=submit] {
-    width: 60%;
-    border-radius: 9px;
-    background: linear-gradient(214.02deg,#b75cff 6.04%,#6205fa 92.95%);
-  }
-  .cancel {
-    width: 120px;
-    margin-right: 20px;
+  .buttons {   
+    button {
+      height: 45px;    
+      font-size: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+      border: none;
+      outline: none;
+      width: 30%;
+      margin-left: 15px;
+    }
    
+    button[type="submit"] {
+      width: 30%;     
+      background: linear-gradient(214.02deg, #b75cff 6.04%, #6205fa 92.95%);
+    }
+    .cancel {
+      width:auto;     
+      background-color: red;
+      &:hover {
+        opacity: 0.8;
+      }
+      
+    }
+    .delete {
+      width: auto;
+      background-color: green;
+      margin-left: 15px;
+    }
+    .minted {
+      width: 20%;
+      background-color: purple;
+    }
    
   }
 
 }
+.image_title {
+  font-size: 15px;
+  color: gray;
+}
 .new {
-  margin: 20px 0 10px;
+  margin: 20px auto 10px;
 }
-.created {
-  color: red;
-  background-color: #fff;
-}
+
 .header {
   margin: 20px 0 30px;
   border: none;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1280px) {
   .create_nft {
-    width: 100vw;
+    width: 95vw;
+    .buttons {
+      .cancel {
+        width: auto;
+      }
+    }
   }
 }
  
@@ -116,10 +145,8 @@
   }
   .create_nft {
     flex-direction: column;
-    width: 100vw;;
-    h1.new {
-      margin: 20px auto;
-    }
+    
+  
     .image {
       width: 95%;
       height: 95vw;

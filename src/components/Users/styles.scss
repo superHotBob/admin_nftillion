@@ -6,16 +6,21 @@ $font: 'Roboto', sans-serif ;
   border-bottom: 1px solid black;
   text-align: center; 
 }
-.header_users {
-  margin: 0;
-  color:#fff;
-  font: 400 30px/100px $font;
-
-}
-.mainblockuser, .header_users {
+.main_users, .main_categories {
+  position: relative;
+  width: 1218px;
+  margin: 0 auto;
+  border-radius: 8px;
+  .data {
+    padding-left: 10px;
+  }
+  span:last-of-type {
+    text-align: center;
+  }
   
-  background: rgba(29, 0, 126);
+ 
 }
+
 header,
 .data {
   display: flex;
@@ -33,17 +38,19 @@ header,
 }
 section {  
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 20px;
+  height: auto;
+  max-height: calc(100vh - 350px);
+  overflow: auto;
   box-sizing: border-box;
   background-color: #fff;
 }
 section .data span .count {
   font: 400 20px/28px $font;
 }  
-header {
-  border: none; 
+header { 
   font: 600 16px/24px 'Public Sans', sans-serif;
-  padding: 20px 40px;
+  padding: 20px 10px;
 }
 header span:first-of-type {
   text-align: left;
@@ -71,32 +78,31 @@ header span:first-of-type {
   background-color: #fff;
   box-shadow: 0 0px 8px 0px rgba(34, 60, 80, 0.2);
 }
-button {
-  height: 45px;
- 
-  font-size: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  color: #fff;
-  border: none;
-  outline: none;
-}
-// button:first-of-type {
-//   background-color: red;
-//   width: 30%;
-// }
-// button:last-of-type {
-//   background-color: #007bff;
-// }
-button:hover {
-  opacity: 0.7;
-  border-color: rgba(200, 255, 255, 1);
-}
+
+
+
 .block_button {
   display: flex;
   margin-top: 30px;
   justify-content: space-around;
+  button {
+    height: 45px;    
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    outline: none;
+    width: 30%;
+  }
+  button:first-of-type {
+    background-color: red;
+    
+  }
+  button:last-of-type {
+    background-color: #007bff;
+  }
 }
 
 .data_edit {
@@ -145,9 +151,9 @@ span img {
   float: right;
   border: 1px solid inherit;
 }
-span:hover img {
-  opacity: 1;
+span:hover img { 
   cursor: pointer;
+  opacity: 1;
 }
 
 @media screen and (max-width: 1450px){
@@ -164,9 +170,13 @@ span:hover img {
 }
 @media screen and (max-width: 1000px){
   $color: red;
-  .mainblockuser {
-    width: 100vw;
-    overflow: scroll;
+  .main_users {
+    width: 98vw;
+    overflow-x: auto;
+    box-sizing: border-box;   
+    section {
+      max-height: fit-content;
+    }
   }
  
   .block_view {
@@ -177,7 +187,8 @@ span:hover img {
     padding: 5px 0;
   }
   header, section {
-    padding: 20px 0;
+    padding: 20px 10px;
+    font: 600 14px/17px 'Public Sans', sans-serif;
   }
 
 }

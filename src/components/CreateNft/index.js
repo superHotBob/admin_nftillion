@@ -1,27 +1,28 @@
 import * as React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import "./styles.scss";
+import Tooltip from "../Tooltip";
+import FirstString from "../FirstString";
 
 export const CreateNft = () => {
-  // const [author, setAuthor] = React.useState("");
-  // const [category, setCategory] = React.useState("");
-  // const [type, setType] = React.useState("");
-  // const [nameCollection, setNameCollection] = React.useState("");
-  // const [symbol, setSymbol] = React.useState("");
-  // const [description, setDescription] = React.useState("");
-
   const [imageCategories, selectImageCategories] = React.useState();
-  const [created, setCreated] = React.useState(false);
+  const [created, setCreated] = React.useState("");
   const [allCollection, setAllCollection] = React.useState([]);
   const location = useLocation();
-  const { register, handleSubmit } = useForm();
+  const navigation = useNavigate();
+  const { register, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      maxSupply: location.state ? location.state.maxSupply : "",
+      currentPrice: location.state ? location.state.currentPrice : "",
+    },
+  });
+
   const viewImage = async (event) => {
     let file = event.target.files[0];
-    console.log(file);
+
     const reader = new FileReader();
     reader.onloadend = function () {
       selectImageCategories(reader.result);
@@ -30,7 +31,7 @@ export const CreateNft = () => {
   };
   React.useEffect(() => {
     if (location.state) {
-      selectImageCategories(location.state.image);
+      selectImageCategories(location.state.metadata.image);
     } else {
       selectImageCategories();
     }
@@ -41,83 +42,123 @@ export const CreateNft = () => {
   React.useEffect(() => {
     name
       ? axios
-          .get("https://app.nftillion.io/admin/collections", {
+          .get("https://app.nftrealworld.io/admin/collections/fromAdmin", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
           })
           .then((res) => {
-            console.log(
-              res.data.map((i) => [{ id: i.id, name: i.metadata.name }]).flat()
-            );
-
             setAllCollection(
-              res.data.map((i) => [{ id: i.id, name: i.metadata.name }]).flat()
+              res.data.collections
+                .map((i) => [{ id: i.id, name: i.metadata.name }])
+                .flat()
             );
           })
       : navigate("/");
-  }, [name, navigate]);
+  }, [name, navigate, location.state]);
+  React.useEffect(
+    () => setValue("collection", location.state ? location.state.collection : ""),
+    [allCollection]
+  );
   async function onSubmit(data) {
     const form = new FormData();
     const metadata = {
-      name: data.nameCollection,
-      symbol: data.symbol,
+      name: data.nameNft,
+      symbol: "&&",
       description: data.description,
-      maxSupply: data.maxSupply,
     };
     form.append("metadata", JSON.stringify(metadata));
     form.append("type", data.type);
     form.append("collection", Number(data.collection));
-    form.append("currenPrice", data.currentPrice);
-    form.append("levels", JSON.stringify({ name: "bob" }));
-    form.append("file", data.image[0]);
+    form.append("maxSupply", Number(data.maxSupply));
+    form.append("currentPrice", data.currentPrice);
+    // form.append("levels", JSON.stringify({ data: "" }));
+    if (data.image[0]) {
+      console.log(data.image[0]);
+      form.append("file", data.image[0]);
+    }
+    if (location.state) {
+      // form.append("status", null)
+      form.append("promoData", data.promoData);
+    }
 
     // event.preventDefault();
-    await axios
-      .post("https://app.nftillion.io/admin/item/create", form, {
+
+    if (location.state) {
+      await axios
+        .put(
+          `https://app.nftrealworld.io/admin/item/update/${location.state.id}`,
+          form,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data; boundary=something",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then((res) => {
+          setCreated("edited");
+          setTimeout(() => setCreated(false), 2000);
+        });
+    } else {
+      await axios
+        .post("https://app.nftrealworld.io/admin/item/create", form, {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=something",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+
+        .then((res) => {
+          setCreated("created");
+          setTimeout(() => setCreated(""), 2000);
+        });
+    }
+  }
+  function DeleteNft(a) {
+    axios
+      .delete(`https://app.nftrealworld.io/admin/item/${location.state.id}`, {
         headers: {
-          "Content-Type": "multipart/form-data; boundary=something",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
-
       .then((res) => {
-        setCreated(true);
-        setTimeout(() => setCreated(false), 2000);
+        navigate("/nftadmin");
       });
   }
   return (
-    <>
-      <h1
-        className={`header_users ${created ? 'new created' : 'new'}`}
-        
-      >
-        {created
-          ? "Congratulations! NFT sucsessfully created"
-          : "Create new NFT"}
-      </h1>
+    <div style={{ marginTop: "5vh" }}>
+      <FirstString
+        text={
+          created
+            ? `Congratulations! NFT sucsessfully ${created}`
+            : location.state
+            ? "Edit NFT"
+            : "Create  NFT"
+        }
+      />
       <form onSubmit={handleSubmit(onSubmit)} method="post">
         <div className="create_nft">
           <div
             className="image"
             style={{
-              height: imageCategories ? "400px" : "auto",
+              height: imageCategories ? "500px" : "150px",
               background: `#fff url(${imageCategories}) center / auto 90% no-repeat`,
             }}
           >
             {imageCategories && (
-              <img
-                src="/icon_close.png"
-                alt="close"
-                height={25}
-                width={25}
-                style={{ float: "right", margin: 5, cursor: "pointer" }}
-                onClick={() => selectImageCategories()}
-              />
+              <b className="close" onClick={() => selectImageCategories()}>
+                {" \u26d2 "}
+              </b>
             )}
             {!imageCategories && (
-              <label style={{ justifyContent: "center" }}>
-                Select image
+              <label style={{ justifyContent: "center", textAlign: "center" }}>
+                <p>
+                  Select image <br />
+                  <b className="image_title">
+                    (File type supported: JPG, PNG, GIF, SVG. Max size: 500 MB)
+                  </b>
+                </p>
                 <input
                   type="file"
                   required
@@ -132,8 +173,14 @@ export const CreateNft = () => {
           </div>
           <div className="inputs">
             <label>
-              <span>Type</span>
-              <select {...register("type")}>
+              <span>
+                Type <Tooltip text="this is text" />{" "}
+              </span>
+              <select
+                {...register("type", {
+                  value: "1",
+                })}
+              >
                 <option value="0">artwork</option>
                 <option value="1">nft</option>
               </select>
@@ -141,8 +188,10 @@ export const CreateNft = () => {
             <label>
               <span>Collection</span>
               <select {...register("collection")}>
-                {allCollection.map((i) => (
-                  <option value={i.id}>{i.name}</option>
+                {[...new Set(allCollection)].map((i) => (
+                  <option key={i.id} value={i.id}>
+                    {i.name}
+                  </option>
                 ))}
               </select>
             </label>
@@ -151,11 +200,8 @@ export const CreateNft = () => {
               <span>Current price</span>
               <input
                 type="text"
-                pattern="[0-9]+"
                 placeholder="current price"
-                {...register("currentPrice", {
-                  value: location.state ? location.state.id : "",
-                })}
+                {...register("currentPrice")}
               />
             </label>
             <label>
@@ -164,43 +210,87 @@ export const CreateNft = () => {
                 type="text"
                 required
                 style={{ marginLeft: 8 }}
-                {...register("maxSupply", {
-                  value: location.state ? location.state.name : "",
-                })}
+                {...register("maxSupply")}
               />
             </label>
             <label>
-              <span>Name*</span>
+              <span>
+                * Name
+                <Tooltip text="this is text about Name" />
+              </span>
               <input
                 type="text"
                 name="name"
                 required
                 style={{ marginLeft: 8 }}
-                {...register("nameCollection")}
+                {...register("nameNft", {
+                  value: location.state ? location.state.metadata.name : "",
+                })}
               />
             </label>
-            <label>
-              <span>Symbol</span>
-              <input type="text" name="symbol" {...register("symbol")} />
-            </label>
+            {/* <label>
+              <span>Symbol <Tooltip text="This is text about Symbol"/></span>
+              <input type="text" name="symbol" {...register("symbol",{
+                  value: location.state ? location.state.metadata.symbol : "",
+                })} />
+            </label> */}
             <label>
               <span>Description</span>
               <textarea
                 rows={3}
+                placeholder="description nft"
                 name="description"
-                {...register("description")}
+                {...register("description", {
+                  value: location.state
+                    ? location.state.metadata.description
+                    : "",
+                })}
               />
             </label>
-            <div className="buttons">
-              <button className="cancel">
-                <Link to="/nft">Cancel</Link>
+            {location.state && (
+              <label>
+                <span>Promo</span>
+                <select
+                  {...register("promoData", {
+                    value: location.state ? location.state.promoData : "",
+                  })}
+                >
+                  <option value="">none</option>
+                  <option value="mainPage">Main page</option>
+                </select>
+              </label>
+            )}
+            <label className="buttons">
+              <button
+                className="button cancel"
+                type="button"
+                onClick={() => navigation("/nftadmin")}
+              >
+                Cancel
               </button>
 
-              <button type="submit">Create</button>
-            </div>
+              <button
+                type="submit"
+                className="button"
+                style={{ width: location.state ? "50%" : "60%" }}
+              >
+                {location.state ? "Save" : "Create new"}
+              </button>
+
+              {location.state && (
+                <button
+                  type="button"
+                  onClick={() => DeleteNft(location.state.id)}
+                  className="button delete"
+                  style={{ background: "green", color: "#fff" }}
+                >
+                  Delete
+                </button>
+              )}
+            </label>
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 };

@@ -11,7 +11,7 @@ export const NavPanel = () => {
           className="users"
           style={({ isActive }) => {
             return {
-              borderRadius: "10px",             
+              borderRadius: "10px",
               background: isActive
                 ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
                 : "inherrit",
@@ -21,11 +21,10 @@ export const NavPanel = () => {
           Users
         </NavLink>
         <div className="second_link mobileNo">
-        <NavLink
+          <NavLink
             to="/nft"
             style={({ isActive }) => {
               return {
-               
                 borderRadius: "10px",
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
@@ -36,10 +35,35 @@ export const NavPanel = () => {
             NFT
           </NavLink>
           <NavLink
+            to="/nftadmin"
+            style={({ isActive }) => {
+              return {
+                borderRadius: "10px",
+                background: isActive
+                  ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
+                  : "",
+              };
+            }}
+          >
+            NFT ADMIN
+          </NavLink>
+          <NavLink
+            to="/promonft"
+            style={({ isActive }) => {
+              return {
+                borderRadius: "10px",
+                background: isActive
+                  ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
+                  : "",
+              };
+            }}
+          >
+            Promo
+          </NavLink>
+          <NavLink
             to="/collections"
             style={({ isActive }) => {
               return {
-               
                 borderRadius: "10px",
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
@@ -48,13 +72,13 @@ export const NavPanel = () => {
             }}
           >
             Collections
-          </NavLink>
+          </NavLink>         
           <NavLink
             to="/categories"
             style={({ isActive }) => {
               return {
                 borderRadius: "10px",
-                
+
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
                   : "inherrit",
@@ -68,7 +92,7 @@ export const NavPanel = () => {
             style={({ isActive }) => {
               return {
                 borderRadius: "10px",
-                
+
                 background: isActive
                   ? "linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%)"
                   : "inherrit",
@@ -100,6 +124,8 @@ export const NavPanel = () => {
       {view && (
         <div className="mobile_menu mobileYes">
           <NavLink to="/nft">Nft</NavLink>
+          <NavLink to="/nftadmin">Nft Admin</NavLink>
+          <NavLink to="/promonft">Promo</NavLink> 
           <NavLink to="/collections">Collections</NavLink>
           <NavLink to="/categories">Categories</NavLink>
           <NavLink to="/premintedcollections">Preminted Collections</NavLink>

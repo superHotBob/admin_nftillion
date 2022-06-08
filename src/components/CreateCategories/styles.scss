@@ -14,6 +14,14 @@
       border: 1px dashed #ddd;
       position: relative;
       background-color: #fff;
+      .close {
+        float: right;
+        cursor: pointer;
+        color: #fff;
+      }
+      .close:hover {
+        color: #000;
+      }
     }
     *::before {
       position: absolute;
@@ -22,26 +30,25 @@
       font-size: 25px;
       font-weight: 600;
     }
-    .image::before {
-      content: "Image";
-    }
+    // .image::before {
+    //   content: "Image";
+    // }
     
     label {
-      font-size: 20px;
-     
+      font-size: 20px;     
       margin: 20px auto;
-
       width: 40%;
-      display: block;
-     
+      display: block;     
     }
     .image label {
       color: #000;
-      cursor: pointer; 
+      cursor: pointer;
+      color: #fff;
+      text-align: center; 
       font-weight: 400;
     }
     .image label:hover {
-      color: gray;
+      color: black;
     }
     label span {
       display: inline-block;
@@ -54,9 +61,8 @@
     legend {
       display: flex;
       justify-content: right;
-      font-size: 25px;
-     
-      width: 50%;
+      font: 400 25px/25px "Popins", sans-serif;   
+      width: 80%;
       align-items: center;
       text-align: left;
       font-weight: 600;
@@ -75,11 +81,31 @@
     }
     .buttons {
       display: flex;
-      justify-content: right;
-      text-align: right;
+      justify-content: space-between;
+      text-align: center;
     }
     .size {
-      width: 340px;
+      width: 40%;
+      margin: 0 20px;
+      border: none;
+    }
+    .delete {
+      background-color: green;
+      width: auto;
+      padding: 0 10px;
+    }
+    .delete:hover, .size:hover {
+      border: 1px solid #fff;
+    }
+    a.cancel {
+      position: static;
+      width:auto;
+      margin: 0;
+      padding: 0 10px;
+      line-height: 45px;
+    }
+    a.cancel:hover {
+      border: 1px solid #fff;
     }
   
    
@@ -120,16 +146,16 @@
     }
     .image {
       width: 95%;
-      margin: 0 auto 50px;
+      margin: 0 auto;
     }
      label {
       font-size: 16px;
-      width: 90%;
+      width: 95%;
       justify-content: right;
       input,
       textarea {
-        width: 250px;
-        margin-right: 10px;
+        width: 60vw;
+        
       }
     }
   }

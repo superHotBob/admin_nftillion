@@ -1,31 +1,57 @@
-.main_categories {
-  .button {
-    height: 52px;
-    box-sizing: border-box;
-    width: 200px;    
-    padding: 10px 20px;
-    color: #fff;    
-    margin: 20px auto;
-    font: 400 22px/26px 'Popins', sans-serif;
-    background: linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%);
-    border-radius: 10px;
+.main_preminted {
+  width: 1218px;
+  margin: 0 auto;
+  padding: 0 20px;
+  border-radius: 10px;
+  height: auto;
+  .header_my {
+    position: sticky;
+    top:0;
+  } 
+  span:last-of-type {
+    text-align: center;
   }
+  .data_categories 
   .image {
     display: inline-block;
     height: 70px;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto 100%;
   }
   .editable:hover {
     background-color: #ddd;
-    cursor: pointer;
+    
   }
 }
-a {
-  text-decoration: none;
+p {
+  cursor: text;  
 }
-
+.data:hover  {
+ background-color: #ddd;
+}
+.data, .header_categories {
+  justify-content: space-around;
+}
+span.delete {
+  padding: 5px 10px;
+  opacity: 0;
+  width: 8%;
+  background-color: red;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 16px;
+}
+span.delete:hover {
+  border: 1px solid #ddd;
+  transition: all 0.5s;
+}
+.new_collection {
+  width: 1212px;
+  margin: 0 auto;
+}
 @media screen and (max-width: 550px) {
   .mainblock_categories .data,
   .mainblock_categories .header_categories {
@@ -34,7 +60,23 @@ a {
   .main_categories b {
     width: 20%;
   }
+  .main_preminted {
+    width: 95vw;
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 0;
+  }
   .mobile span {
     width: 22%;
+  }
+  .new_collection {
+    width: 90vw;
+    text-align: left;
+    font-size: 20px;
+   
+    a {
+      text-align: center;
+    }
   }
 }

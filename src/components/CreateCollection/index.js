@@ -1,21 +1,22 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import "./styles.scss";
 import axios from "axios";
+import Tooltip from "../Tooltip";
+import FirstString from "../FirstString";
 
 export const Create = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [viewAnswer, setViewAnswer] = React.useState(false);
-
+  const [dataCategories, setDataCategories] = React.useState([]);
   const [imageCollection, selectImageCollection] = React.useState();
   const [bannerCollection, selectBannerCollection] = React.useState();
   const [logoCollection, selectLogoCollection] = React.useState();
 
-  const {
-    register,
-    handleSubmit    
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   const viewImage = async (event) => {
     let file = event.target.files[0];
@@ -26,7 +27,7 @@ export const Create = () => {
     reader.readAsDataURL(file);
   };
   const viewBanner = async (event) => {
-    let file = event.target.files[0];   
+    let file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = function () {
       selectBannerCollection(reader.result);
@@ -34,70 +35,167 @@ export const Create = () => {
     reader.readAsDataURL(file);
   };
   const viewLogo = async (event) => {
-    let file = event.target.files[0];   
+    let file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = function () {
       selectLogoCollection(reader.result);
     };
     reader.readAsDataURL(file);
   };
-  async function onSubmit(data) {   
-    const form = new FormData();
-    const metadata = {
-      name: data.nameCollection,
-      symbol: data.symbol,
-      description: data.description,
-    };
-    // form.append("author", Number(data.author));
-    form.append("type", Number(data.type));
-    form.append("category", Number(data.Category));
-    form.append("metadata", JSON.stringify(metadata));
-    form.append("image", data.image[0]);
-    form.append("logo", data.banner[0]);
-    form.append("banner", data.logo[0]);
 
-    console.log(data.image[0]);
-     await axios
-      .post("https://app.nftillion.io/admin/collection/create", form, {
+  React.useEffect(() => {
+    if (location.state) {
+      selectLogoCollection(location.state.logo);
+      selectBannerCollection(location.state.banner);
+      selectImageCollection(location.state.image);
+    } else {
+      selectLogoCollection();
+    }
+  }, [location]);
+  React.useEffect(() => {
+    axios
+      .get("https://app.nftrealworld.io/admin/categories", {
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
-      .then((res) => setViewAnswer(true))
-      .then(res=>setTimeout(()=>setViewAnswer(false),2000));   
+      .then((res) => {
+        console.log(res.data.categories.map((i) => [{ name: i.name, id: i.id }].flat()));
+        setDataCategories(res.data.categories.map((i) => [{ name: i.name, id: i.id }]));
+        if (location.state) {
+          setValue("Category", location.state.category.id);
+        }
+      });
+  }, []);
+
+  function Minted() { 
+    const form = new FormData();
+    form.append('maxSupply', 1);   
+    axios
+    .post(`https://app.nftrealworld.io/admin/collection/mint/${location.state.id}`,form, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })    
+    .then((res) => {
+     axios
+      .put(
+        `https://app.nftrealworld.io/admin/collection/update/${location.state.id}`,
+        {status: 1},
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      ).then(res=>{
+          console.log(res.data);
+          navigate("/premintedcollections");
+        });
+      })
+    .catch((error) => console.log('This is erroe message', error.message));
+  }
+  function DeleteCollection(a) {
+    axios
+      .delete(
+        `https://app.nftrealworld.io/admin/collection/${location.state.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
+      .then((res) => {
+        navigate("/premintedcollections");
+      })
+      .catch((error) => console.log(error.message));
+  }
+  async function onSubmit(data) {
+    const form = new FormData();
+    const metadata = {
+      name: data.nameCollection,
+      symbol: "&&",
+      description: data.description,
+    };
+    // form.append("author", Number(data.author));
+    form.append("type", 2);
+    form.append("category", Number(data.Category));
+    form.append("maxSupply", 1 );
+    form.append("metadata", JSON.stringify(metadata));
+    if (data.image[0]) {
+      form.append("image", data.image[0]);
+    }
+    if (data.logo[0]) {
+      form.append("logo", data.logo[0]);
+    }
+    if (data.banner[0]) {
+      form.append("banner", data.banner[0]);
+    }
+
+    if (location.state) {
+      await axios
+        .put(
+          `https://app.nftrealworld.io/admin/collection/update/${location.state.id}`,
+          form,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then((res) => setViewAnswer(true))
+        .then((res) => setTimeout(() => setViewAnswer(false), 2000));
+    } else {
+      await axios
+        .post("https://app.nftrealworld.io/admin/collection/create", form, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((res) => setViewAnswer(true))
+        .then((res) => {
+          setTimeout(() => setViewAnswer(false), 2000);
+          navigate("/premintedcollections");
+        });
+    }
   }
   return (
     <div>
-      <h1 className="header_users new">Create new collection</h1>
+      {/* <h1 className="header_users new">
+        {location.state ? "Edit" : "Create"} collection
+      </h1>  */}
+      <FirstString text={location.state ? "Edit collection" : "Create collection"} />
       <form onSubmit={handleSubmit(onSubmit)} className="main_block_create">
-        <div className="image_block" style={{ marginTop: 40 }}>
+        <div className="image_block">
           <div
             className="image"
             style={{
-              height: imageCollection ? "300px" : "auto",
+              height: imageCollection ? "200px" : "auto",
               background: `#fff url(${imageCollection}) center / auto 90% no-repeat`,
             }}
           >
             {imageCollection && (
-              <img
-                src="/icon_close.png"
-                alt="close"
-                height={25}
-                width={25}
-                style={{ float: "right", margin: 10, cursor: "pointer" }}
-                onClick={() => selectImageCollection()}
-              />
+              <b className="close" onClick={() => selectImageCollection()}>
+                {" \u26d2 "}
+              </b>
             )}
+
             {!imageCollection && (
               <label>
-                Select image
+                <p>
+                  Select image <br />
+                  <b className="image_title">
+                    (File type supported: JPG, PNG, GIF, SVG. Max size: 10 MB)
+                  </b>
+                </p>
                 <input
                   type="file"
                   style={{ display: "none" }}
                   {...register("image", {
-                    onChange: (e) => viewImage(e)
-                  })}                 
+                    onChange: (e) => viewImage(e),
+                  })}
                   accept="image/png, image/gif, image/webp, image/jpeg, video/mp4,audio/mp3"
                 />
               </label>
@@ -106,24 +204,24 @@ export const Create = () => {
           <div
             className="banner"
             style={{
-              height: bannerCollection ? "300px" : "auto",
+              height: bannerCollection ? "200px" : "auto",
               background: `#fff url(${bannerCollection}) center / auto 90% no-repeat`,
             }}
           >
             {" "}
             {bannerCollection && (
-              <img
-                src="/icon_close.png"
-                alt="close"
-                height={25}
-                width={25}
-                style={{ float: "right", margin: 10, cursor: "pointer" }}
-                onClick={() => selectBannerCollection()}
-              />
+              <b className="close" onClick={() => selectBannerCollection()}>
+                {" \u26d2 "}
+              </b>
             )}
             {!bannerCollection && (
               <label>
-                Select banner
+                <p>
+                  Select banner <br />
+                  <b className="image_title">
+                    (File type supported: JPG, PNG, GIF, SVG. Size: 1920x460)
+                  </b>
+                </p>
                 <input
                   type="file"
                   style={{ display: "none" }}
@@ -136,24 +234,24 @@ export const Create = () => {
           <div
             className="logo"
             style={{
-              height: logoCollection ? "50px" : "auto",
+              height: logoCollection ? "200px" : "auto",
               background: `#fff url(${logoCollection}) center / auto 90% no-repeat`,
             }}
           >
             {" "}
             {logoCollection && (
-              <img
-                src="/icon_close.png"
-                alt="close"
-                height={25}
-                width={25}
-                style={{ float: "right", margin: 10, cursor: "pointer" }}
-                onClick={() => selectLogoCollection()}
-              />
+              <b className="close" onClick={() => selectLogoCollection()}>
+                {" \u26d2 "}
+              </b>
             )}
             {!logoCollection && (
               <label>
-                Select logo
+                <p>
+                  Select logo <br />
+                  <b className="image_title">
+                    (File type supported: JPG, PNG, GIF, SVG. Size: 186x186)
+                  </b>
+                </p>
                 <input
                   type="file"
                   style={{ display: "none" }}
@@ -165,69 +263,92 @@ export const Create = () => {
           </div>
         </div>
         <div className="data_block">
-          {/* <label>
-            Author
-            <input
-              type="text"
-              pattern="[0-9]+"
-              placeholder="id of created user"
-              name="author"             
-              {...register("author")}
-              // onChange={(e) => setAuthor(e.target.value)}
-            />
-          </label> */}
           <label>
-            Category
+            <span>Category</span>
             <select {...register("Category")}>
-              <option value='1'>Art</option>
-              <option value='2'> Music</option>
-              <option value='3'> Sports</option>
+              {dataCategories.flat().map((i) => (
+                <option value={i.id}>{i.name}</option>
+              ))}
             </select>
           </label>
-          <label>
+          {/* <label>
+            <span>Icon</span>
+            <select {...register("Icon")}>
+              {icons.map(i=><option value={i}><img src={i} width="20" height="20"/>{i} </option>)}              
+            </select>
+          </label> */}
+          {/* <label>
             Type
             <input
               type="text"
               name="type"
+              disabled
+              style={{color: '#ddd'}}
               pattern="[0-9]+"              
-              {...register("type")}              
+              {...register("type", {value: 2})}              
             />
-          </label>
+          </label> */}
           <label>
-            Name*
+            <span>
+              *Name <Tooltip text="text about Name" />{" "}
+            </span>
             <input
               type="text"
               name="name"
+              placeholder="enter name collection"
               required
-              style={{ marginLeft: 8 }}             
-              {...register("nameCollection")}              
+              {...register("nameCollection", {
+                value: location.state ? location.state.name : "",
+              })}
             />
           </label>
-          <label>
-            Symbol
+          {/* <label>
+            <span>Symbol <Tooltip text="text about Symbol" /></span>
             <input
               type="text"
               name="symbol"              
               {...register("symbol")}              
             />
-          </label>
+          </label> */}
           <label>
-            Description
+            <span>Description</span>
             <textarea
               rows={5}
-              name="description"             
-              {...register("description")}              
+              name="description"
+              {...register("description", {
+                value: location.state ? location.state.description : "",
+              })}
             />
           </label>
-          <label>
-            <Link to="/premintedcollections">
-              <button className="cancel">Cancel</button>
-            </Link>
-            <button type="submit">Create</button>
+          <label className="buttons">
+            <button
+              className="cancel"
+              onClick={() => navigate("/premintedcollections")}
+            >
+              Cancel
+            </button>
+
+            <button type="submit">{location.state ? "Save" : "Create"}</button>
+            
+            {location.state && (<>
+              <button
+                className="delete"
+                onClick={() => DeleteCollection(location.state.id)}
+                type="button"
+              >
+                Delete
+              </button>
+              {!location.state.status &&
+                <button type="button" className="minted" onClick={Minted}>Minted</button>
+              }
+              </>
+            )}
           </label>
         </div>
       </form>
-      <div className={viewAnswer ? 'answer' : 'answer hide'}>Collection created</div>
+      <div className={viewAnswer ? "answer" : "answer hide"}>
+        Collection {location.state ? "edited" : "Created"}
+      </div>
     </div>
   );
-}
+};

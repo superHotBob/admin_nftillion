@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./styles.scss";
 
 import { NavPanel } from "../NavPanel";
+import FirstString from "../FirstString";
 
 export const Users = () => {
   let navigate = useNavigate();
@@ -14,6 +15,8 @@ export const Users = () => {
   const [cause, setCause] = React.useState("");
   const [id, setId] = React.useState("");
   const [blocked, setBlocked] = React.useState();
+  const [page, setPage] = React.useState(1);
+  const [total, setTotal] = React.useState(0);
 
   function CancelBlocked() {
     setView(false);
@@ -28,15 +31,15 @@ export const Users = () => {
     navigator.clipboard.writeText(a);
   }
 
-  function Save() {
-    console.log(blocked);
+  function Save(a, b) {
+    console.log("type", a, b);
     setView(false);
     axios
       .post(
-        "https://app.nftillion.io/admin/user/block",
+        "https://app.nftrealworld.io/admin/user/block",
         {
-          id: id,
-          isblocked: blocked,
+          id: a,
+          isBlocked: b,
           cause: cause,
         },
         {
@@ -45,9 +48,7 @@ export const Users = () => {
           },
         }
       )
-      .then((res) => {
-        console.log(res.data);
-      });
+      .then((res) => {});
   }
 
   function SetVerified(a, b) {
@@ -56,7 +57,7 @@ export const Users = () => {
     console.log(my_data);
     axios
       .post(
-        "https://app.nftillion.io/admin/user/verify",
+        "https://app.nftrealworld.io/admin/user/verify",
         {
           id: b,
           verified: a,
@@ -67,64 +68,83 @@ export const Users = () => {
           },
         }
       )
-      .then((res) => {
-        console.log(res.data);
-      });
+      .then((res) => {});
   }
   function SetBlocked(a, b) {
     let my_data = data.map((i) => (i.id === b ? { ...i, isBlocked: a } : i));
     setData(my_data);
     setBlocked(a);
     setId(b);
-    console.log(my_data);
-    !a ? Save() : setView(a);
+    !a ? Save(b, a) : setView(a);
   }
   React.useEffect(() => {
     name
       ? axios
-          .get(`https://app.nftillion.io/admin/users`, {
+          .get(`https://app.nftrealworld.io/admin/users?page=${page}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
           })
           .then((res) => {
-            console.log(res.data);
-            console.log(
-              res.data.map(
-                (i) => (i.created = new Date(i.created).toLocaleString())
-              )
-            );
-            setData(res.data);
+            setTotal(res.data.total);
+            setData(res.data.users);
           })
       : navigate("/");
-  }, [name, navigate]);
+  }, [name, navigate, page]);
 
   return (
     <>
       <NavPanel />
-      <h1 className="header_users">List of users</h1>
-      <div className="main_categories">
+      <FirstString text="List of users" title={`Total users: ${total}`} />
+      <div className="page_search">
+        {/* <input type="search" placeholder="enter id for search" /> */}
+        {page - 1 ? (
+          <b
+            title="prev page"
+            className="pagers prev"
+            onClick={() => setPage(page - 1)}
+          >
+            prev
+          </b>
+        ) : null}
+        <b
+          title="next page"
+          className="pagers next"
+          onClick={() => setPage(page + 1)}
+        >
+          next
+        </b>
+      </div>
+      <div className="main_users">
         <header>
-          <span>wallet</span>
-          <span>date registration</span>
-          <span>date last authorization</span>
-          <span >count collections</span>
-          <span >count NFTs</span>
-          <span >verified</span>
-          <span >blocked</span>
+          <span style={{ width: "18%" }}>Wallet</span>
+          <span>Date registration</span>
+          <span>Date last authorization</span>
+          <span>Count collections</span>
+          <span>Count NFTs</span>
+          <span>Verified</span>
+          <span>Blocked</span>
         </header>
         <section>
-          {data.map(i => (
-            <p className="data" key={i.id}>
-              <span  onClick={()=> WriteToClipboard(i.wallet.address)}>
-                {i.wallet.address.slice(0,8)}<strong>...</strong>{i.wallet.address.slice(41,100)}
-                <img src='/copy.png' title="copy address" width={30} height={20} alt="copy"/>
+          {data.map((i) => (
+            <div className="data" key={i.id}>
+              <span onClick={() => WriteToClipboard(i.wallet.address)} style={{width: '18%'}}>
+                {i.wallet.address.slice(0, 8)}
+                <strong>...</strong>
+                {i.wallet.address.slice(41, 100)}
+                <img
+                  src="/copy.png"
+                  title="copy address"
+                  width={30}
+                  height={20}
+                  alt="copy"
+                />
               </span>
               <span>{new Date(i.wallet.created).toLocaleString()}</span>
               <span>{new Date(i.joined).toLocaleString()}</span>
               <span>{i.count}</span>
-              <span  className="count">{i.items}</span>
-              <span>             
+              <span className="count">{i.items}</span>
+              <span>
                 <input
                   type="checkbox"
                   checked={i.isVerified}
@@ -138,12 +158,12 @@ export const Users = () => {
                   onChange={() => SetBlocked(!i.isBlocked, i.id)}
                 />
               </span>
-            </p>
+            </div>
           ))}
         </section>
         <div className={view ? "block_view" : "block_hide"}>
           <div className="data_edit">
-            <p>
+            <div>
               <b>Enter cause blocked</b>
               <textarea
                 type="textarea"
@@ -152,13 +172,13 @@ export const Users = () => {
                 value={cause}
                 onChange={(e) => setCause(e.target.value)}
               />
-            </p>
+            </div>
           </div>
 
-          <p className="block_button">
+          <div className="block_button">
             <button onClick={CancelBlocked}>Cancel</button>
-            <button onClick={Save}>Save</button>
-          </p>
+            <button onClick={() => Save(id, blocked)}>Save</button>
+          </div>
         </div>
       </div>
     </>

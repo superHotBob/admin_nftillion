@@ -6,19 +6,29 @@
   font-family: "Roboto", sans-serif;
   .image_block {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: rgba(29, 0, 126, 1);
-    padding: 10px;
-    height: auto;
+    height: 60vh;
     .image,
     .banner,
     .logo {
       width: 80%;
-      height: auto;
-      margin: 0 auto;
+      height: 30%;
+      margin: 30px auto;
       border-radius: 5px;
-      margin-bottom: 160px;
+
       border: 1px dashed #ddd;
       position: relative;
+      .close {
+        float: right;
+        cursor: pointer;
+        color: #ccc;
+      }
+      .close:hover {
+        color: #000;
+      }
     }
     .banner:hover,
     .image:hover,
@@ -28,7 +38,8 @@
       background-color: rgba(29, 0, 126, 0.8);
     }
     *::before {
-      position: absolute;
+      position: absolute;     
+      display: inline-block;
       top: -35px;
       color: #fff;
       background: rgba(29, 0, 126);
@@ -50,7 +61,7 @@
       font-size: 20px;
       font-weight: 400;
       margin: 20px auto;
-      width: 40%;
+      width: 95%;
       color: rgb(29, 0, 126);
       display: block;
       cursor: pointer;
@@ -58,7 +69,10 @@
   }
   .data_block {
     width: 50%;
-    height: auto;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-left: 1px solid #ddd;
     background: rgba(29, 0, 126);
     label,
@@ -67,12 +81,13 @@
       color: #fff;
       justify-content: right;
       font-size: 25px;
-      margin: 0 auto 30px;
+      margin: 0 auto;
       width: 100%;
       font-family: "Urbanist", sans-serif;
       align-items: center;
       text-align: left;
       font-weight: 400;
+      padding-left: 10px;
       input,
       textarea,
       select {
@@ -86,22 +101,44 @@
         margin: 10px 0 0 20px;
         outline: none;
       }
+      span {
+        position: relative;
+        margin-right: 15px;
+      }
     }
-    .buttons {
-      display: flex;
-      justify-content: right;
-      text-align: right;
-      margin-top: 30px;
-    }
-    button[type=submit] {
-      width: 340px;
-      
-      background: linear-gradient(214.02deg,#b75cff 6.04%,#6205fa 92.95%);
-    }
-    .cancel {
-      width: 120px;
-      margin-right: 20px;
-      background-color: red;
+    .buttons {    
+      button {
+        height: 45px;    
+        font-size: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        color: #fff;
+        border: none;
+        outline: none;
+        margin-left: 15px;
+        
+      }    
+      button[type="submit"] {
+        width: 30%;
+       
+        background: linear-gradient(214.02deg, #b75cff 6.04%, #6205fa 92.95%);
+      }
+      .cancel {
+        width: auto;
+        margin: 0;
+        padding: 0 15px;
+        background-color: red;
+      }
+      .delete {
+        width: auto;
+        padding: 0 15px;
+        background-color: green;
+      }
+      .minted {
+        width: 20%;
+        background-color: purple;
+      }
     }
   }
 }
@@ -166,38 +203,52 @@
     }
   }
 }
-@media screen and (max-width: 550px) {
-  .new {
-    margin: 30px auto 0;
-  }
-
+@media screen and (max-width: 550px) { 
   .main_block_create {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     width: 100vw;
-    margin: 0 auto;
+    margin: 0 auto 30px;
     .image_block,
     .data_block {
-      width: 90vw;
+      width: 95vw;
       padding: 0;
       border: none;
+      .buttons {
+        button {
+          font-size: 16px;
+        }
+        button[type="submit"] {
+          width: 60vw;
+        }
+      }
+
+    }
+    .image_block::before {
+      font-size: 18px;
     }
     .image_block .image,
     .image_block .banner,
     .image_block .logo {
-      width: 95%;
+      width: 100%;
       margin: 0 auto 50px;
+      &::before {
+        font-size: 16px;
+        top: -23px;
+      }
     }
     .data_block label {
       font-size: 16px;
       width: 98%;
+      padding-left: 0;
       input,
       textarea,
       select {
-        width: 250px;
-        margin-right: 0;
+        width: 60vw;
+        margin: 0;
       }
     }
+   
   }
 }

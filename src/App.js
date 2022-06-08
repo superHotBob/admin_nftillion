@@ -11,12 +11,16 @@ import { PremintedCollections } from "./components/PremintedCollections";
 import { CreateCategories } from "./components/CreateCategories";
 import { Nft } from "./components/Nft";
 import { CreateNft } from "./components/CreateNft";
+import { NftAdmin } from "./components/NftAdmin";
+import { CollectionsAdmin } from "./components/CollectionsAdmin";
+import { Promo } from "./components/Promo";
 
 function App() {
   return (
     <div className="App">
        <Helmet>
         <meta charSet="utf-8" />
+        <title>Admin app</title>
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta
           name="viewport"
@@ -28,7 +32,10 @@ function App() {
         <Route path="/" element={<LogIn />} />      
         <Route path="users" element={<Users />} />
         <Route path="nft" element={<Nft />} />
+        <Route path="promonft" element={<Promo />} />
+        <Route path="nftadmin" element={<NftAdmin />} />
         <Route path="createnft" element={<CreateNft />} />
+        <Route path="collectionsadmin" element={<CollectionsAdmin />} />
         <Route path="collections" element={<Collections />} />
         <Route path="categories" element={<Categories />} />
         <Route path="premintedcollections" element={<PremintedCollections />} />

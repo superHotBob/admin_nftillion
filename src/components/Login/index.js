@@ -14,7 +14,7 @@ export const LogIn = () => {
   function login(event) {
     event.preventDefault();
     axios
-      .post(`https://app.nftillion.io/admin/login`, {
+      .post(`https://app.nftrealworld.io/admin/login`, {
         username: name,
         password: password,
       })
@@ -36,7 +36,7 @@ export const LogIn = () => {
   function change(event) {
     event.preventDefault();
     axios
-      .post(`https://app.nftillion.io/admin/changePassword`, {
+      .post(`https://app.nftrealworld.io/admin/changePassword`, {
         username: name,
         password: password,
         newPassword: newPassword,

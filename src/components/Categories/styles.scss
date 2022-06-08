@@ -9,7 +9,7 @@
   }
   .data {
     justify-content: space-around;
-  }
+  }  
   header {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
@@ -23,21 +23,23 @@
     height: 70px;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto 90%;
+    background-color: #ccc;
   }
   .categories:hover {
     cursor: pointer;
   }
 }
-
-a {
-  text-decoration: none;
+.editable:hover {
+  background-color: #ccc;
+  cursor: pointer;
+  border-radius: 8px;
 }
+
 
 @media screen and (max-width: 1200px) {
   .main_categories {
-    width: 94%;
-    overflow: scroll;
+    width: 95%;   
     padding: 0;
   }
   header,
@@ -47,10 +49,12 @@ a {
 }
 @media screen and (max-width: 550px) {
   .main_categories {
-    width: 90vw;
-    overflow: scroll;
+    width: 95vw;
+    overflow-x: scroll;
     box-sizing: border-box;
     margin: 0 auto;
+    height: auto;
+   
   }
 
   .main_categories b {
@@ -63,4 +67,5 @@ a {
   .header {
     margin: 0;
   }
+
 }

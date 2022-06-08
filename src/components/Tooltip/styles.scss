@@ -1,0 +1,38 @@
+.main_tooltip {
+    position: absolute;
+    left: 60%;
+    top: -22px;
+    b {
+        display: inline-block;
+        width: 20px;
+        height: 19px;
+        line-height: 22px;;
+        border-radius: 20px;
+        border: 2px solid gray;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+        color: gray;
+        background-color: aqua;
+    }
+    b:hover .text {
+       display: inline-block;
+    }
+    .text {
+        display: none;
+        transition: all 0.5s;
+        position: absolute;
+        top: -50px;
+        left: -95px;
+       
+        font-weight: 300;
+        width: 250px;
+        box-sizing: border-box;
+        overflow: hidden;
+        box-shadow: 0 0 15px 3px #ddd;
+        padding: 10px;
+        color: black;
+        border-radius: 6px;
+        background-color: aliceblue;
+    }
+}

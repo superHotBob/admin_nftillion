@@ -4,16 +4,22 @@
   width: 100vw;
   height: 100vh;
   overflow: auto;
-}  
+}
+
 section {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
   width: 100%;
   padding-bottom: 20px;
   font-family: 'Roboto', sans-serif;
+  padding: 0;
+}
+.data {
+  padding: 20px;
+  border-radius: 0;
 }
 .data span {
-  width: 10%;
+  width: 15%;
   font: 300 20px/28px "Roboto", sans-serif;
   color:  #585858;
   
@@ -22,16 +28,22 @@ section {
   height: 50px;
   box-sizing: border-box;
   width: 200px;    
- 
+  cursor: pointer;
   color: #fff;    
   margin: 20px auto;
-  font: 400 22px/50px 'Popins', sans-serif;
+  font: 400 22px/29px 'Popins', sans-serif;
   background: linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%);
   border-radius: 10px;
 }
+a.button {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+}
 .cancel {
   width: 120px;
-  margin-right: 20px;  
+  margin-right: 20px;
+  line-height: 27px;  
   text-align: center;
   background: red;
 }
@@ -39,12 +51,13 @@ header {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
   font: 600 16px/24px 'Public Sans', sans-serif;
+  border: none;
 }
 header span  {
-  width: 10%;
+  width: 15%;
 }
 header span:first-of-type, section p span:first-of-type {
-  width: 17%;
+  width: 20%;
 }
 section .data span.count {
   font: 500 20px/28px 'Roboto', sans-serif;
@@ -58,20 +71,70 @@ section p span:first-of-type {
 a {
   color: #fff;
 }
+
 body {
   background: rgba(29, 0, 126);
+}
+.image .close, .banner .close, .logo .close {
+  float: right;
+  cursor: pointer;
+  color: green;
+  font-size: 20px;
+  margin: -3px 2px;
+}
+.image .close:hover {
+  color: #000;
 }
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500&family=Roboto:ital,wght@0,500;1,400&display=swap');
 
 @media screen and (max-width: 550px) {
+  .App{
+     margin-top: -20px;
+  }
+ 
   header, section {
     width: 1214px;
   }
   header span:first-of-type, section p span:first-of-type {
     width: 13%;
   }
-}
+  header, section {
+    padding: 20px;
+    font: 600 14px/17px 'Public Sans', sans-serif;
+  }
+  .data span {
+    width: 15%;
+    font: 300 14px/20px "Roboto", sans-serif;
+    color:  #585858;
+    
+  }
 
+  *::-webkit-scrollbar {
+    width: 0px;
+    border-radius: 20px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: silver;
+    border-radius: 20px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 20px;
+    width: 0px;
+    
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge add Firefox */
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+  }
+}
 
 
 

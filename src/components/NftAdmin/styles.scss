@@ -1,0 +1,118 @@
+.main_nft {
+  width: 1218px;
+  margin: 0 auto;
+  height: auto;
+  position: relative;
+  border-radius: 10px;
+  .pagers {
+    position: absolute;
+    top: -45px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 18px;
+    padding: 5px 8px;
+    border-radius: 10px;
+    border: 2px solid blue;
+    color: inherit;
+    background-color: #fff;
+  }
+  .pagers:hover {
+    border: 2px solid #fff;
+  }
+  .next {
+    left: 125px;
+  }  
+  label {
+    float: left;
+    margin: 10px 0;
+    font-size: 20px;
+  } 
+  section {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    height: auto;
+    max-height: calc(100vh - 350px);
+    overflow: auto;
+  }
+  .data {
+    justify-content: space-around;
+  }
+  header {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    justify-content: space-around;
+    position: sticky;
+    top: 0;
+  }
+  .last_image {
+    text-align: center;
+  }
+  p:hover {
+    background-color: #ccc;
+    
+  }
+  .image {
+    display: inline-block;
+    height: 70px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+  }
+  .categories:hover {
+    cursor: pointer;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+.createNft {
+  width: 1212px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 1280px) {
+  .main_nft {
+    width: 98%;
+
+    padding: 0;
+  }
+  
+}
+@media screen and (max-width: 550px) {
+  .main_nft {
+    width: 95vw;
+    overflow: scroll;
+    box-sizing: border-box;
+    margin: 0 auto;
+    position: relative;
+  }
+  header,
+  section {
+    width: 650px;
+  }
+  .createNft {
+    width: 90vw;
+    margin: 0 auto;
+  }
+  .main_categories b {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .mobile span {
+    width: 22%;
+  }
+  .header {
+    margin: 0;
+  }
+  .header_users {
+    width: 90vw;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 34px;
+    a {
+      text-align: center;
+      top: -8px;
+    }
+  }
+}
