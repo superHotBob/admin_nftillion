@@ -67,8 +67,7 @@ export const CreateNft = () => {
       symbol: "&&",
       description: data.description,
     };
-    form.append("metadata", JSON.stringify(metadata));
-    form.append("type", data.type);
+    form.append("metadata", JSON.stringify(metadata));   
     form.append("collection", Number(data.collection));
     form.append("maxSupply", Number(data.maxSupply));
     form.append("currentPrice", data.currentPrice);
@@ -172,19 +171,19 @@ export const CreateNft = () => {
             )}
           </div>
           <div className="inputs">
-            <label>
+            {/* <label>
               <span>
                 Type <Tooltip text="this is text" />{" "}
               </span>
               <select
                 {...register("type", {
-                  value: "1",
+                  value: "0",
                 })}
               >
-                <option value="0">artwork</option>
-                <option value="1">nft</option>
+                <option value="1">artwork</option>
+                <option value="0">nft</option>
               </select>
-            </label>
+            </label> */}
             <label>
               <span>Collection</span>
               <select {...register("collection")}>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import search from "../../image/search.svg";
 import "./styles.scss";
 import { NavPanel } from "../NavPanel";
 import FirstString from "../FirstString";
@@ -92,13 +92,45 @@ export const Collections = () => {
     console.log(my_data);
     !a ? Save(b, a) : setView(a);
   }
-
+  function Search(e) {
+    if (e.target.value) {
+      axios
+        .get(
+          `https://app.nftrealworld.io/admin/collections?search=${e.target.value}&page=${page}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then((res) => {
+          setData(res.data.collections);
+        });
+    } else {
+      axios
+        .get(`https://app.nftrealworld.io/admin/collections?page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          setData(res.data.collections);
+        });
+    }
+  }
   return (
     <>
       <NavPanel />
       <FirstString text="List of Collections" />
       <div className="page_search">
-      
+      <input type="search" placeholder="enter for search" onChange={Search} />
+        <img
+          src={search}
+          width="25"
+          alt="search"
+          height="25"
+          className="image"
+        />
       {page - 1 ? (
             <b
               title="prev page"

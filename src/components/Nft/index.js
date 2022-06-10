@@ -97,7 +97,7 @@ export const Nft = () => {
   }
   React.useEffect((i) => {
     axios
-      .get('https://app.nftrealworld.io/admin/collections?page=0&take=100', {
+      .get('https://app.nftrealworld.io/admin/collections?take=100&page=1', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
