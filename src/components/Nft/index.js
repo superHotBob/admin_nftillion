@@ -69,8 +69,23 @@ export const Nft = () => {
   const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
-    name
+    !name
+      ? navigate("/")
+      : filterCollection === "single"
       ? axios
+          .get(
+            `https://app.nftrealworld.io/admin/items?single=true&page=${page}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
+          .then((res) => {
+            setNft(res.data.items);
+            setTotal(res.data.total);
+          })
+      : axios
           .get(
             `https://app.nftrealworld.io/admin/items?collection=${filterCollection}&page=${page}`,
             {
@@ -82,9 +97,7 @@ export const Nft = () => {
           .then((res) => {
             setNft(res.data.items);
             setTotal(res.data.total);
-          })
-      : navigate("/");
-   
+          });
   }, [name, navigate, page, filterCollection]);
 
   function SetBlocked(a, b) {
@@ -97,11 +110,14 @@ export const Nft = () => {
   }
   React.useEffect((i) => {
     axios
-      .get('https://app.nftrealworld.io/admin/collections?take=100&page=1', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      .get(
+        "https://app.nftrealworld.io/admin/collections?fromAdmin=false&take=100&page=1",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
       .then((res) => {
         console.log(
           res.data.collections
@@ -128,10 +144,7 @@ export const Nft = () => {
       )
       .then((res) => {});
   }
-  function SelectCollection(e) {
-    setFilterCollection(e.target.value);
-    
-  }
+
   function Search(e) {
     if (e.target.value) {
       axios
@@ -161,10 +174,7 @@ export const Nft = () => {
   return (
     <div>
       <NavPanel />
-      <FirstString
-        text="NFT"
-        title={`Total NFT: ${total}`}       
-      />
+      <FirstString text="NFT" title={`Total NFT: ${total}`} />
       <div className="page_search">
         <input type="search" placeholder="enter for search" onChange={Search} />
         <img
@@ -177,11 +187,16 @@ export const Nft = () => {
         {my_collection && (
           <label>
             collection:
-            <select defaultValue="all" onChange={(e) => SelectCollection(e)}>
+            <select
+              defaultValue="all"
+              onChange={(e) => setFilterCollection(e.target.value)}
+            >
               <option value="">All</option>
               <option value="single">Single</option>
               {my_collection.map((i) => (
-                <option value={i.id}>{i.name}</option>
+                <option key={i.id} value={i.id}>
+                  {i.name}
+                </option>
               ))}
             </select>
           </label>
@@ -207,7 +222,7 @@ export const Nft = () => {
         <header className="header_categories">
           <span style={{ width: "8%" }}>Id</span>
           <span>Name</span>
-          <span>Collection</span>
+          <span onClick={() => setFilterCollection("")}>Collection</span>
           <span>Created</span>
           <span className="last_image">Image</span>
           <span>Verified</span>
@@ -221,8 +236,12 @@ export const Nft = () => {
                 <div className="data mobile editable" key={i.id}>
                   <span style={{ width: "8%" }}>{i.id}</span>
                   <span>{i.metadata.name}</span>
-                  <span onClick={() => setCollection(i.collection)}>
-                    {!i.collection
+                  <span
+                    onClick={() =>
+                      setFilterCollection(i.collection ? i.collection.id : "")
+                    }
+                  >
+                    {/* {!i.collection
                       ? ""
                       : my_collection.filter(
                           (a) => a.id === Number(i.collection)
@@ -230,7 +249,8 @@ export const Nft = () => {
                       ? my_collection.filter(
                           (a) => a.id === Number(i.collection)
                         )[0].name
-                      : ""}
+                      : ""} */}
+                    {i.collection ? i.collection.name : ""}
                   </span>
 
                   <span>{new Date(i.created).toLocaleString()}</span>

@@ -16,7 +16,7 @@ export const NftAdmin = () => {
   const [page, setPage] = React.useState(1);
   const [total, setTotal] = React.useState(0);
   const [collection, setCollection] = React.useState();
-  const [fiterCollection, setFilterCollection] = React.useState('');
+  const [fiterCollection, setFilterCollection] = React.useState("");
 
   function CancelBlocked() {
     setView(false);
@@ -68,7 +68,7 @@ export const NftAdmin = () => {
   React.useEffect(
     (i) => {
       axios
-        .get("https://app.nftrealworld.io/admin/collections/fromAdmin", {
+        .get("https://app.nftrealworld.io/admin/collections?fromAdmin=true", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
@@ -89,8 +89,23 @@ export const NftAdmin = () => {
     [page]
   );
   React.useEffect(() => {
-    name
-      ? axios
+    !name
+      ?  navigate("/")
+      : fiterCollection === 'single' ? 
+      axios
+          .get(
+            `https://app.nftrealworld.io/admin/items/fromAdmin?single=true&page=${page}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
+          .then((res) => {
+            setNft(res.data.items);
+            setTotal(res.data.total);
+          }):
+          axios
           .get(
             `https://app.nftrealworld.io/admin/items/fromAdmin?collection=${fiterCollection}&page=${page}`,
             {
@@ -102,8 +117,8 @@ export const NftAdmin = () => {
           .then((res) => {
             setNft(res.data.items);
             setTotal(res.data.total);
-          })
-      : navigate("/");
+          });  
+     
 
     axios
       .get("https://app.nftrealworld.io/admin/itemsWithPromo", {
@@ -112,7 +127,7 @@ export const NftAdmin = () => {
         },
       })
       .then((res) => {});
-  }, [name, navigate, page,fiterCollection]);
+  }, [name, navigate, page, fiterCollection]);
   function SetBlocked(a, b) {
     let my_data = nft.map((i) => (i.id === b ? { ...i, isBlocked: a } : i));
     setNft(my_data);
@@ -120,28 +135,28 @@ export const NftAdmin = () => {
     setId(b);
     !a ? Save(b, a) : setView(a);
   }
- 
+
   function Search(e) {
     if (e.target.value) {
       axios
-        .get(`https://app.nftrealworld.io/admin/items/fromAdmin?search=${e.target.value}&page=${page}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
-        .then((res) => {
-          setNft(res.data.items);
-        });
-    } else {
-      axios
         .get(
-          `https://app.nftrealworld.io/admin/items/fromAdmin?page=${page}`,
+          `https://app.nftrealworld.io/admin/items/fromAdmin?search=${e.target.value}&page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
           }
         )
+        .then((res) => {
+          setNft(res.data.items);
+        });
+    } else {
+      axios
+        .get(`https://app.nftrealworld.io/admin/items/fromAdmin?page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
         .then((res) => {
           setNft(res.data.items);
         });
@@ -156,23 +171,30 @@ export const NftAdmin = () => {
         title={`Total NFT: ${total}`}
       />
       <div className="page_search">
-        <input type="search" onChange={Search}  placeholder="enter for search"/> 
+        <input type="search" onChange={Search} placeholder="enter for search" />
         <img
           src={search}
           width="25"
           alt="search"
           height="25"
           className="image"
-        /> 
-        
-        {collection && <label>
-        collection:
-        <select defaultValue='all' onChange={(e)=>setFilterCollection(e.target.value)}>
-          <option value="">All</option>
-          <option value="single">Single</option>
-          {collection.map(i=><option value={i.id}>{i.name}</option>)}
-        </select>
-        </label>}
+        />
+
+        {collection && (
+          <label>
+            collection:
+            <select
+              defaultValue="all"
+              onChange={(e) => setFilterCollection(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="single">Single</option>
+              {collection.map((i) => (
+                <option key={i.id} value={i.id}>{i.name}</option>
+              ))}
+            </select>
+          </label>
+        )}
         {page - 1 ? (
           <b
             title="prev page"
@@ -202,17 +224,13 @@ export const NftAdmin = () => {
         </header>
 
         <section className="data_categories">
-          {nft && collection  && (
+          {nft && collection && (
             <>
               {nft.map((i) => (
                 <p className="data mobile editable" key={i.id}>
                   <span style={{ width: "8%" }}>{i.id}</span>
                   <span style={{ width: "20%" }}>{i.metadata.name}</span>
-                  <span>
-                    {collection.filter((n) => n.id === i.collection)[0]
-                      ? collection.filter((n) => n.id === i.collection)[0].name
-                      : ''}
-                  </span>
+                  <span>{i.collection ? i.collection.metadata.name : ""}</span>
                   <span>{new Date(i.created).toLocaleString()}</span>
                   <Link
                     to="/createnft"

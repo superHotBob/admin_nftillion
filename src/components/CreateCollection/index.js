@@ -62,11 +62,14 @@ export const Create = () => {
       .then((res) => {
         console.log(res.data.categories.map((i) => [{ name: i.name, id: i.id }].flat()));
         setDataCategories(res.data.categories.map((i) => [{ name: i.name, id: i.id }]));
-        if (location.state) {
-          setValue("Category", location.state.category.id);
-        }
-      });
+      });    
   }, []);
+
+  React.useEffect(()=>{
+    if (location.state) {
+          setValue("Category", location.state.category.id);
+       }
+  },[dataCategories])
 
   function Minted() { 
     const form = new FormData();
@@ -117,8 +120,7 @@ export const Create = () => {
       symbol: "&&",
       description: data.description,
     };
-    // form.append("author", Number(data.author));
-    form.append("type", 2);
+    // form.append("author", Number(data.author));   
     form.append("category", Number(data.Category));
     form.append("maxSupply", 1 );
     form.append("metadata", JSON.stringify(metadata));

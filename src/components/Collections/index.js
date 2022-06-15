@@ -32,7 +32,7 @@ export const Collections = () => {
       .post(
         `https://app.nftrealworld.io/admin/collection/block/${a}`,
         {
-          blocked: b,
+          isBlocked: b,
           cause: cause,
         },
         {
@@ -45,13 +45,12 @@ export const Collections = () => {
         console.log(res.data);
       });
   }
-
   let navigate = useNavigate();
   const name = localStorage.getItem("accessToken");
   React.useEffect(() => {
     name
       ? axios
-          .get(`https://app.nftrealworld.io/admin/collections?page=${page}`, {
+          .get(`https://app.nftrealworld.io/admin/collections?fromAdmin=false&page=${page}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
@@ -68,10 +67,9 @@ export const Collections = () => {
     console.log(my_data);
     axios
       .post(
-        "https://app.nftrealworld.io/admin/collection/verify",
-        {
-          id: b,
-          verified: a,
+        `https://app.nftrealworld.io/admin/collection/verify/${b}`,
+        {        
+          isVerified: a,
         },
         {
           headers: {
@@ -96,7 +94,7 @@ export const Collections = () => {
     if (e.target.value) {
       axios
         .get(
-          `https://app.nftrealworld.io/admin/collections?search=${e.target.value}&page=${page}`,
+          `https://app.nftrealworld.io/admin/collections?fromAdmin=false&search=${e.target.value}&page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -108,7 +106,7 @@ export const Collections = () => {
         });
     } else {
       axios
-        .get(`https://app.nftrealworld.io/admin/collections?page=${page}`, {
+        .get(`https://app.nftrealworld.io/admin/collections?fromAdmin=false&page=${page}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
@@ -160,7 +158,7 @@ export const Collections = () => {
         <section>
        
           {data.map((i) => (
-            <p className="data">
+            <p className="data" key={i.id}>
               <span>
                 {i.author.wallet.address.slice(0, 8)}
                 <strong>...</strong>
@@ -168,7 +166,7 @@ export const Collections = () => {
               </span>
               <span>{i.metadata.name}</span>
               <span>{new Date(i.author.joined).toLocaleString()}</span>
-              <span>{i.amount}</span>
+              <span>{i.items.length}</span>
               <span>
                 <input
                   type="checkbox"

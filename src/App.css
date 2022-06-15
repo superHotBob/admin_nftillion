@@ -5,6 +5,9 @@
   height: 100vh;
   overflow: auto;
 }
+label button:hover {
+  opacity: 0.8;
+}
 
 section {
   border-bottom-left-radius: inherit;
@@ -35,6 +38,7 @@ section {
   background: linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%);
   border-radius: 10px;
 }
+
 a.button {
   position: absolute;
   bottom: 5px;

@@ -32,7 +32,7 @@ export const PremintedCollections = () => {
         `https://app.nftrealworld.io/admin/collection/block/${a}`,
         {
          
-          blocked: b,
+          isBlocked: b,
           cause: cause,
         },
         {
@@ -51,10 +51,10 @@ export const PremintedCollections = () => {
     console.log(my_data);
     axios
       .post(
-        "https://app.nftrealworld.io/admin/collection/verify",
+        `https://app.nftrealworld.io/admin/collection/verify/${b}`,
         {
-          id: b,
-          verified: a,
+         
+          isVerified: a,
         },
         {
           headers: {
@@ -72,7 +72,7 @@ export const PremintedCollections = () => {
   React.useEffect(() => {
     name
       ? axios
-          .get(`https://app.nftrealworld.io/admin/collections/fromAdmin?page=${page}`, {
+          .get(`https://app.nftrealworld.io/admin/collections?fromAdmin=true&page=${page}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
