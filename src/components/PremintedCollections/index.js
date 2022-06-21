@@ -140,6 +140,7 @@ export const PremintedCollections = () => {
                     name: i.metadata.name,
                     description: i.metadata.description,
                     logo: i.logo,
+                    mintAddress: i.mintAddress,
                     banner: i.banner,
                     category: i.category
                   }}

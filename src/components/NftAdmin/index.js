@@ -34,7 +34,7 @@ export const NftAdmin = () => {
       .post(
         `https://app.nftrealworld.io/admin/item/block/${a}`,
         {
-          blocked: b,
+          isBlocked: b,
           cause: cause,
         },
         {
@@ -238,7 +238,7 @@ export const NftAdmin = () => {
                     state={{
                       id: i.id,
                       maxSupply: i.maxSupply,
-                      collection: i.collection,
+                      collection: i.collection.id,
                       metadata: i.metadata,
                       promoData: i.promoData,
                       currentPrice: i.currentPrice,

@@ -1,72 +1,179 @@
+$color_hover: yellow;
+
 .mainNavBlock {
   display: flex;
   width: 1218px;
   justify-content: space-between;
   font-size: 22px;
   line-height: 25px;
+  position: relative;
   padding: 0px;
+  height: 50px;
   text-align: center;
   background: rgba(29, 0, 126, 1);
   font-weight: 600;
   text-decoration: none;
   margin: 20px auto;
- .second_link {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
- }
- .users {
-   font: 500 25px/40px 'Roboto' , sans-serif;
- }
+
+  .second_link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .users {
+    font: 500 25px/40px 'Roboto', sans-serif;
+  }
+
+  
+
   a {
     margin: 0;
     font-family: 'Public Sans', sans-serif;
     background: rgba(29, 0, 126, 1);
     font-size: 16px;
     padding: 5px 10px;
-    line-height: 30px;    
-    color: #fff;  
+    line-height: 30px;
+    color: #fff;
     text-decoration: none;
-  } 
+  }
+
   img.mobileNo {
-    margin: 0 30px;
+    margin: 0 auto;
+    display: block;
   }
+
+  .wallet {
+    color: #fff;
+    height: 40px;
+    width: 180px;
+    position: absolute;
+    top: 4px;
+    left: 115px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: inherit;
+    font-family: 'Public Sans', sans-serif;
+    overflow: hidden;
+    z-index: 200;
+  }
+
+  div.wallet:hover {
+    overflow: auto;
+
+    height: 200px;
+  }
+
+  .transfer {
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    cursor: pointer;
+  }
+
+  .transfer:hover {
+    border: 1px solid $color_hover;
+    color: $color_hover;
+  }
+
+  .sendSol {
+    height: auto;
+    width: 400px;
+    position: absolute;
+    top: 90px;
+    z-index: 200;
+    border-radius: 8px;
+    padding: 0 30px 30px;
+    left: calc(50% - 200px);
+    background-color: #6205FA;
+    b.close {
+      float: right;
+      cursor: pointer;
+      color: #ccc;
+      margin: 6px -24px 0;
+      font-size: 24px;
+    }
+    h1 {
+      font: 400 35px/250px 'Public Sans', sans-serif;
+      color: #fff;
+    }
+  }
+
+  .sendSol span,
+  .sendSol input,
+  .sendSol button {
+    display: block;
+    outline: none;
+    margin: 10px auto 0;
+    text-align: left;
+    color: #000;
+    box-sizing: border-box;
+    width: 100%;    
+    font: 400 25px/25px 'Public Sans', sans-serif;
+    border-radius: 8px;
+    border: none;
+    padding: 10px 20px;
+  }
+
+  .sendSol span {
+    color: #fff;
+    padding-left: 0;
+  }
+
+  .sendSol button {
+    color: #fff;
+    text-align: center;
+    background-color: green;
+
+    border: 1px solid #fff;
+    margin-top: 45px;
+    cursor: pointer;
+    ;
+  }
+
   .second_link a:last-of-type {
-   width: 123px;
-   height: 50px;
-   padding: 0;
-   margin-right: 0;
-   line-height: 48px;
-   box-sizing: border-box;
-   background: linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%);
-   border-radius: 10px;
+    width: 123px;
+    height: 50px;
+    padding: 0;
+    margin-right: 0;
+    line-height: 48px;
+    box-sizing: border-box;
+    background: linear-gradient(214.02deg, #B75CFF 6.04%, #6205FA 92.95%);
+    border-radius: 10px;
   }
+
   .mobileYes {
-  display: none;
-}
-}
-@media screen and (max-width: 1280px) {
-  .mainNavBlock{
-     width: 96%;
-     align-items: center;
-     border-bottom: 1px solid rgba(244, 245, 247, 0.5);
-     padding: 15px 0;
-     a {
-       font-size: 16px;
-       margin: 0 5px;
-       padding: 10px;
-       font-weight: 500;
-     }
-     img.mobileNo {
-       margin: 0 5px;
-     }
-     a .second_link a:last-of-type {
-       width: 100px;
-       font-size: 16px;
-     }
+    display: none;
   }
- 
 }
+
+@media screen and (max-width: 1280px) {
+  .mainNavBlock {
+    width: 96%;
+    align-items: center;
+    border-bottom: 1px solid rgba(244, 245, 247, 0.5);
+    padding: 15px 0;
+
+    a {
+      font-size: 16px;
+      margin: 0 5px;
+      padding: 10px;
+      font-weight: 500;
+    }
+
+    img.mobileNo {
+      margin: 0 5px;
+    }
+
+    a .second_link a:last-of-type {
+      width: 100px;
+      font-size: 16px;
+    }
+  }
+
+}
+
 @media screen and (max-width: 550px) {
   .mainNavBlock {
     align-items: center;
@@ -80,11 +187,12 @@
     .mobileNo {
       display: none;
     }
-    
+
     .mobileYes {
       display: inline-block;
-     
+
     }
+
     a {
       font-size: 14px;
       height: 30px;
@@ -94,16 +202,19 @@
       width: 33%;
       text-align: left;
     }
+
     a:last-of-type {
       width: 100px;
       padding: 0;
     }
   }
 }
+
 .mobileYes {
   display: inline-block;
- 
+
 }
+
 .mobile_menu {
   width: 50%;
   height: auto;
@@ -111,11 +222,12 @@
   position: absolute;
   top: 10px;
   font-size: 20px;
-  padding: 10px 0  10px 30px;
+  padding: 10px 0 10px 30px;
   border-radius: 5px;
   left: 8px;
   border: 1px solid skyblue;
   z-index: 100;
+
   a {
     display: block;
     text-align: left;

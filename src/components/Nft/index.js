@@ -32,7 +32,7 @@ export const Nft = () => {
       .post(
         `https://app.nftrealworld.io/admin/item/block/${a}`,
         {
-          blocked: b,
+          isBlocked: b,
           cause: cause,
         },
         {
@@ -111,7 +111,7 @@ export const Nft = () => {
   React.useEffect((i) => {
     axios
       .get(
-        "https://app.nftrealworld.io/admin/collections?fromAdmin=false&take=100&page=1",
+        "https://app.nftrealworld.io/admin/collections?take=1000&page=1",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

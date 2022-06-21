@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import "./styles.scss";
@@ -62,41 +62,26 @@ export const Create = () => {
       .then((res) => {
         console.log(res.data.categories.map((i) => [{ name: i.name, id: i.id }].flat()));
         setDataCategories(res.data.categories.map((i) => [{ name: i.name, id: i.id }]));
-      });    
+      });
   }, []);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     if (location.state) {
-          setValue("Category", location.state.category.id);
-       }
-  },[dataCategories])
+      setValue("Category", location.state.category.id);
+    }
+  }, [dataCategories])
 
-  function Minted() { 
+  function Minted(a) {
     const form = new FormData();
-    form.append('maxSupply', 1);   
+    console.log("minted", a);
+    // form.append('maxSupply', 1);   
     axios
-    .post(`https://app.nftrealworld.io/admin/collection/mint/${location.state.id}`,form, {
+      .post(`https://app.nftrealworld.io/admin/collection/mint/${a}`, form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-      })    
-    .then((res) => {
-     axios
-      .put(
-        `https://app.nftrealworld.io/admin/collection/update/${location.state.id}`,
-        {status: 1},
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      ).then(res=>{
-          console.log(res.data);
-          navigate("/premintedcollections");
-        });
       })
-    .catch((error) => console.log('This is erroe message', error.message));
+      .catch((error) => console.log('This is erroe message', error.message));
   }
   function DeleteCollection(a) {
     axios
@@ -117,12 +102,12 @@ export const Create = () => {
     const form = new FormData();
     const metadata = {
       name: data.nameCollection,
-      symbol: "&&",
+      symbol: "NFRW",
       description: data.description,
     };
     // form.append("author", Number(data.author));   
     form.append("category", Number(data.Category));
-    form.append("maxSupply", 1 );
+    form.append("maxSupply", 1);
     form.append("metadata", JSON.stringify(metadata));
     if (data.image[0]) {
       form.append("image", data.image[0]);
@@ -156,6 +141,7 @@ export const Create = () => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         })
+        .then(res => Minted(res.data.id))
         .then((res) => setViewAnswer(true))
         .then((res) => {
           setTimeout(() => setViewAnswer(false), 2000);
@@ -268,6 +254,7 @@ export const Create = () => {
           <label>
             <span>Category</span>
             <select {...register("Category")}>
+              <option >select category</option>
               {dataCategories.flat().map((i) => (
                 <option value={i.id}>{i.name}</option>
               ))}
@@ -322,6 +309,7 @@ export const Create = () => {
               })}
             />
           </label>
+
           <label className="buttons">
             <button
               className="cancel"
@@ -331,7 +319,7 @@ export const Create = () => {
             </button>
 
             <button type="submit">{location.state ? "Save" : "Create"}</button>
-            
+
             {location.state && (<>
               <button
                 className="delete"
@@ -340,10 +328,11 @@ export const Create = () => {
               >
                 Delete
               </button>
-              {!location.state.status &&
-                <button type="button" className="minted" onClick={Minted}>Minted</button>
+              {!location.state.mintAddress ?
+                <button type="button" className="minted" onClick={() => Minted(location.state.id)}>Minted</button> :
+                <button type="button" className="view_solscan"><a href={`https://solscan.io/token/${location.state.mintAddress}`} > Look at SolScan </a></button>
               }
-              </>
+            </>
             )}
           </label>
         </div>

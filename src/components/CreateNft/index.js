@@ -10,7 +10,7 @@ import FirstString from "../FirstString";
 export const CreateNft = () => {
   const [imageCategories, selectImageCategories] = React.useState();
   const [created, setCreated] = React.useState("");
-  const [allCollection, setAllCollection] = React.useState([]);
+  const [allCollection, setAllCollection] = React.useState();
   const location = useLocation();
   const navigation = useNavigate();
   const { register, handleSubmit, setValue } = useForm({
@@ -32,17 +32,27 @@ export const CreateNft = () => {
   React.useEffect(() => {
     if (location.state) {
       selectImageCategories(location.state.metadata.image);
+    
     } else {
       selectImageCategories();
     }
   }, [location]);
+
+  React.useEffect(() => {
+    if (location.state) {
+     
+      setValue("collection", location.state.collection);
+    } else {
+      
+    }
+  }, [allCollection]);
 
   let navigate = useNavigate();
   const name = localStorage.getItem("accessToken");
   React.useEffect(() => {
     name
       ? axios
-          .get("https://app.nftrealworld.io/admin/collections/fromAdmin", {
+          .get("https://app.nftrealworld.io/admin/collections?fromAdmin=true", {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
@@ -50,9 +60,11 @@ export const CreateNft = () => {
           .then((res) => {
             setAllCollection(
               res.data.collections
+                .filter(i=> i.isBlocked === false)
                 .map((i) => [{ id: i.id, name: i.metadata.name }])
                 .flat()
             );
+            // console.log(res.data.collections.filter(i=> i.isBlocked === false));
           })
       : navigate("/");
   }, [name, navigate, location.state]);
@@ -64,12 +76,12 @@ export const CreateNft = () => {
     const form = new FormData();
     const metadata = {
       name: data.nameNft,
-      symbol: "&&",
+      symbol: "NFRW",
       description: data.description,
     };
     form.append("metadata", JSON.stringify(metadata));   
     form.append("collection", Number(data.collection));
-    form.append("maxSupply", Number(data.maxSupply));
+    form.append("maxSupply", Number(1) );
     form.append("currentPrice", data.currentPrice);
     // form.append("levels", JSON.stringify({ data: "" }));
     if (data.image[0]) {
@@ -186,7 +198,9 @@ export const CreateNft = () => {
             </label> */}
             <label>
               <span>Collection</span>
-              <select {...register("collection")}>
+              <select {...register("collection",{value: location.state
+                    ? location.state.collection
+                    : ""})}>
                 {[...new Set(allCollection)].map((i) => (
                   <option key={i.id} value={i.id}>
                     {i.name}
@@ -203,7 +217,7 @@ export const CreateNft = () => {
                 {...register("currentPrice")}
               />
             </label>
-            <label>
+            {/* <label>
               <span>Max Supply</span>
               <input
                 type="text"
@@ -211,11 +225,11 @@ export const CreateNft = () => {
                 style={{ marginLeft: 8 }}
                 {...register("maxSupply")}
               />
-            </label>
+            </label> */}
             <label>
               <span>
                 * Name
-                <Tooltip text="this is text about Name" />
+                <Tooltip text="Input name your NFT" />
               </span>
               <input
                 type="text"
